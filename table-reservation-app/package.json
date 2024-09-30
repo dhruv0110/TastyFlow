@@ -1,0 +1,1 @@
+{"scripts":{"client":"npm start --prefix table-reservation-client","server":"nodemon table-reservation-api/server.js","both":"concurrently \"npm run client\" \"npm run server\""},"dependencies":{"concurrently":"^9.0.1"}}

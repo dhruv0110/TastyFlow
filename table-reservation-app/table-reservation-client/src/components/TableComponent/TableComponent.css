@@ -1,0 +1,125 @@
+/* src/components/TableComponent/TableComponent.css */
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #1B1C1F;
+    color: #fff;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1400px; /* Set max-width for alignment with navbar */
+}
+
+.table-heading {
+    margin-bottom: 2rem;
+    color: #ff4135;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.indicator .container{
+    display: flex;
+    gap: 40px;
+    margin-bottom: 1.5rem;
+}
+.grey-info, .red-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Space between the icon and the text */
+    font-size: 1rem; /* Adjust the font size for readability */
+    color: #fff;
+}
+
+.grey, .red {
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+}
+
+.grey {
+    border: 1px solid white;
+    background-color: #333;
+}
+
+.red {
+    border: 1px solid white;
+    background-color: #ff4135;
+}
+
+
+.table-button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.table-button {
+    width: calc(33.33% - 1.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.table-button-button {
+    width: 100%;
+    padding: 1.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.table-button-button.reserved {
+    background-color: #ff4135;
+    color: #fff;
+}
+
+.table-button-button.loading {
+    background-color: #444;
+    cursor: wait;
+}
+
+.table-button-button:hover:not(.reserved):not(.loading) {
+    background-color: #555;
+}
+
+.table-button-reserved {
+    margin-top: 0.5rem;
+    color: #ff4135;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Spinner container for loading state */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    .table-button {
+        width: 100%;
+    }
+    .table-heading {
+        font-size: 2rem;
+    }
+    .table-button-button {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
