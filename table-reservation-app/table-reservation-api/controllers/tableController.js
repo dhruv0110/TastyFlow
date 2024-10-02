@@ -142,14 +142,28 @@ const adminUnreserveTable = async (req, res) => {
 
 const addTable = async (req, res) => {
   try {
-    const { number } = req.body;
-    const table = new Table({ number });
+    const { number, capacity } = req.body; // Destructure capacity from req.body
+
+    // Validate that number and capacity are provided
+    if (!number || !capacity) {
+      return res.status(400).json({ message: "Table number and capacity are required" });
+    }
+
+    // Create new table with both number and capacity
+    const table = new Table({
+      number,
+      capacity
+    });
+
+    // Save the table to the database
     await table.save();
+
     res.json(table);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const deleteTable = async (req, res) => {
   try {

@@ -7,7 +7,9 @@ import './TableShow.css';
 function TableShow(props) {
   const [tables, setTables] = useState([]);
   const [tableNumber, setTableNumber] = useState('');
+  const [tableCapacity, setTableCapacity] = useState(''); // State for table capacity
   const [loadingTable, setLoadingTable] = useState(null); // State for loading spinner
+  const [addingTable, setAddingTable] = useState(false); // State to show a loading spinner when adding a table
 
   useEffect(() => {
     fetchTables();
@@ -23,14 +25,23 @@ function TableShow(props) {
   };
 
   const addTable = async () => {
+    if (!tableNumber || !tableCapacity) {
+      props.showAlert('Table number and capacity are required', 'error');
+      return;
+    }
+
     try {
-      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber });
+      setAddingTable(true); // Show loading spinner while adding a table
+      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber, capacity: tableCapacity });
       props.showAlert('Table added', 'success');
       fetchTables();
       setTableNumber('');
+      setTableCapacity('');
     } catch (error) {
       console.error('Error adding table:', error);
       props.showAlert('Error adding table', 'error');
+    } finally {
+      setAddingTable(false); // Hide loading spinner after table is added
     }
   };
 
@@ -47,7 +58,7 @@ function TableShow(props) {
 
   const unreserveTable = async (number) => {
     try {
-      setLoadingTable(number); // Set loading state
+      setLoadingTable(number); // Set loading state for the table being unreserved
       const token = localStorage.getItem('token');
       if (!token) {
         console.error('No token found');
@@ -64,8 +75,9 @@ function TableShow(props) {
       fetchTables();
     } catch (error) {
       console.error('Error unreserving table:', error);
+      props.showAlert('Error unreserving table', 'error');
     } finally {
-      setLoadingTable(null); // Reset loading state
+      setLoadingTable(null); // Reset loading state after unreserving table
     }
   };
 
@@ -75,22 +87,35 @@ function TableShow(props) {
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div className='table-show'>
-        <h1 className='header'>Tables Reservation</h1>
+        <h1 className='header'>Manage Tables</h1>
+
         <div className='table-input-container'>
           <input 
             type="number" 
             value={tableNumber}
             onChange={(e) => setTableNumber(e.target.value)}
-            placeholder="Table Number"
+            placeholder="Enter table number"
+            className="table-input"
           />
-          <button onClick={addTable}>Add Table</button>
+          <input 
+            type="number" 
+            value={tableCapacity}
+            onChange={(e) => setTableCapacity(e.target.value)}
+            placeholder="Enter table capacity"
+            className="table-input"
+          />
+          <button onClick={addTable} className="add-button" disabled={addingTable}>
+            {addingTable ? <CustomSpinner /> : 'Add Table'}
+          </button>
         </div>
+
         <div className='table-list'>
           {sortedTables.map(table => (
             <div key={table.number} className='table-item'>
               <button
                 onClick={() => table.reserved && unreserveTable(table.number)}
                 className={table.reserved ? 'unreserve-button' : 'reserve-button'}
+                disabled={loadingTable === table.number}
               >
                 {loadingTable === table.number ? (
                   <div className="spinner-container">
@@ -100,11 +125,13 @@ function TableShow(props) {
                   `Table ${table.number}`
                 )}
               </button>
+
               {table.reserved && (
                 <div className='reserved-info'>
                   Reserved by: {table.reservedBy?.name || 'Unknown'} ({table.reservedBy?.contact || 'Unknown'})
                 </div>
               )}
+
               <button
                 onClick={() => deleteTable(table.number)}
                 className='delete-button'

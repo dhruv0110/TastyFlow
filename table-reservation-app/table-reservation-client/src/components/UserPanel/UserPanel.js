@@ -24,10 +24,10 @@ import Footer from "../Footer/Footer";
 import ContactUs from "../ContactUs/ContactUs";
 import Blog from "../Blog/Blog";
 
-
-
 function UserPanel({ showAlert }) {
   const divRef = useRef(null);
+  const heroTextRef = useRef(null); // Ref for .hero-text
+
   useEffect(() => {
     gsap.to(divRef.current, {
       rotation: 360,
@@ -35,6 +35,14 @@ function UserPanel({ showAlert }) {
       repeat: -1,
       ease: "linear",
     });
+  }, []);
+
+  useEffect(() => {
+    gsap.fromTo(
+      heroTextRef.current,
+      { x: "-50%", opacity: 0 }, // Start position (off-screen to the left)
+      { x: "0%", opacity: 1, duration: 1, ease: "power2.out" } // End position (its original place)
+    );
   }, []);
 
   const [foodList, setFoodList] = useState([]);
@@ -102,52 +110,49 @@ function UserPanel({ showAlert }) {
 
   return (
     <>
-      
-        <div className="hero-section">
-          <div class="circle-bg"></div>
-          <div class="arrow-img"></div>
-          <div className="container hero-content">
-            <div className="hero-text">
-              <p className="subheading">Best Taste</p>
-              <h1>Healthy & Tasty Food</h1>
-              <p className="description">
-                Delight in the world of delectable, healthful cuisine that
-                thrills your taste buds while feeding your body - welcome to the
-                universe of Nutritious & Tasty food!
-              </p>
-              <button className="hero-button">Get Menu</button>
-            </div>
+      <div className="hero-section">
+        <div className="circle-bg"></div>
+        <div className="arrow-img"></div>
+        <div className="container hero-content">
+          <div className="hero-text" ref={heroTextRef}> {/* Ref added here */}
+            <p className="subheading">Best Taste</p>
+            <h1>Healthy & Tasty Food</h1>
+            <p className="description">
+              Delight in the world of delectable, healthful cuisine that
+              thrills your taste buds while feeding your body - welcome to the
+              universe of Nutritious & Tasty food!
+            </p>
+            <button className="hero-button">Get Menu</button>
+          </div>
 
-            <div className="spinner-div">
-              <img
-                src={spinner}
-                loading="eager"
-                alt="home wheel img"
-                className="rotate-text"
-                ref={divRef}
-              />
-            </div>
-            <div className="hero-images">
-              <img
-                src={topImages[topImageIndex]}
-                alt="Top Image"
-                className={`hero-image1 ${fade ? "fade-in" : "fade-out"}`}
-              />
-              <img
-                src={bottomImages[bottomImageIndex]}
-                alt="Bottom Image"
-                className={`hero-image2 ${fade ? "fade-in" : "fade-out"}`}
-              />
-            </div>
+          <div className="spinner-div">
+            <img
+              src={spinner}
+              loading="eager"
+              alt="home wheel img"
+              className="rotate-text"
+              ref={divRef}
+            />
+          </div>
+          <div className="hero-images">
+            <img
+              src={topImages[topImageIndex]}
+              alt="Top Image"
+              className={`hero-image1 ${fade ? "fade-in" : "fade-out"}`}
+            />
+            <img
+              src={bottomImages[bottomImageIndex]}
+              alt="Bottom Image"
+              className={`hero-image2 ${fade ? "fade-in" : "fade-out"}`}
+            />
           </div>
         </div>
-     
+      </div>
 
       <div className="container culnary">
         <CulinaryFavorites />
       </div>
       <div>
-        {/* <RestaurantShowcase /> */}
         <ChoiceOfCustomers />
       </div>
       <div className="container">
@@ -158,11 +163,11 @@ function UserPanel({ showAlert }) {
       <Teams />
       <HomepageGallery />
       <div className="container">
-      <Blog/>
-      <FilterDisplay category={category} food_list={foodList} />
+        <Blog />
+        <FilterDisplay category={category} food_list={foodList} />
       </div>
-      <ContactUs/>
-      <Footer/>
+      <ContactUs />
+      <Footer />
     </>
   );
 }
