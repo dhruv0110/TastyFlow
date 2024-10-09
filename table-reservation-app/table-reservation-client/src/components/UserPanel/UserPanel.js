@@ -149,9 +149,8 @@ function UserPanel({ showAlert }) {
         </div>
       </div>
 
-      <div className="container culnary">
+    
         <CulinaryFavorites />
-      </div>
       <div>
         <ChoiceOfCustomers />
       </div>

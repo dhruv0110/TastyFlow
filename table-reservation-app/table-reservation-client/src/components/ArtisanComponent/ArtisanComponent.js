@@ -5,7 +5,7 @@ import './ArtisanComponent.css'; // Import CSS for styling
 
 const ArtisanComponent = () => {
   return (
-    <section className="artisan-container">
+    <section className="container artisan-container">
       <div className="artisan-content">
         <p className="artisan-tag">Delicious</p>
         <h1 className="artisan-title">Curated Culinary Creations</h1>
