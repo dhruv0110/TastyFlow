@@ -1,8 +1,8 @@
 const Table = require('../models/Table');
-const User = require('../models/User'); // Assuming you have a User model
+const User = require('../models/User');
 const nodemailer = require('nodemailer');
 
-// Nodemailer setup
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -64,7 +64,7 @@ const unreserveTable = async (req, res) => {
   try {
     const { number } = req.body;
     const userId = req.user.id;
-    const userRole = req.user.role; // Fetch the user's role from the token
+    const userRole = req.user.role;
     const table = await Table.findOne({ number });
 
     if (!table) {
@@ -142,20 +142,18 @@ const adminUnreserveTable = async (req, res) => {
 
 const addTable = async (req, res) => {
   try {
-    const { number, capacity } = req.body; // Destructure capacity from req.body
+    const { number, capacity } = req.body;
 
-    // Validate that number and capacity are provided
     if (!number || !capacity) {
       return res.status(400).json({ message: "Table number and capacity are required" });
     }
 
-    // Create new table with both number and capacity
     const table = new Table({
       number,
       capacity
     });
 
-    // Save the table to the database
+
     await table.save();
 
     res.json(table);
@@ -186,3 +184,4 @@ module.exports = {
   addTable,
   deleteTable
 };
+ 
