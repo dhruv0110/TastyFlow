@@ -23,6 +23,7 @@ import { HomepageGallery } from "../HomepageGallery/HomepageGallery";
 import Footer from "../Footer/Footer";
 import ContactUs from "../ContactUs/ContactUs";
 import Blog from "../Blog/Blog";
+import Testimonial from "../Testimonial/Testimonial";
 
 
 
@@ -156,6 +157,7 @@ function UserPanel({ showAlert }) {
       </div>
 
       <Teams />
+      <Testimonial/>
       <HomepageGallery />
       <div className="container">
       <Blog/>
