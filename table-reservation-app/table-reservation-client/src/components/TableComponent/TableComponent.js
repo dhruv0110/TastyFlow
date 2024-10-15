@@ -1,5 +1,3 @@
-// src/components/TableComponent/TableComponent.js
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CustomSpinner from "../CustomSpinner/CustomSpinner";
@@ -9,6 +7,7 @@ const TableComponent = ({ showAlert }) => {
   const [tables, setTables] = useState([]);
   const [userId, setUserId] = useState("");
   const [loadingTable, setLoadingTable] = useState(null);
+  const [capacityFilter, setCapacityFilter] = useState(""); // State for filtering by capacity
 
   useEffect(() => {
     fetchUserDetails();
@@ -87,26 +86,46 @@ const TableComponent = ({ showAlert }) => {
 
   const sortedTables = [...tables].sort((a, b) => a.number - b.number);
 
+  const filteredTables = capacityFilter
+    ? sortedTables.filter((table) => table.capacity === parseInt(capacityFilter))
+    : sortedTables;
+
   return (
     <div className="table-container">
       <div className="container">
         <div className="table-heading">
           <h1>Reserve Your Table</h1>
         </div>
-        <div className="indicator">
-          <div className="container">
-            <div className="grey-info">
+
+        <div className="filter-indicator-container">
+          <div className="capacity-filter">
+            <label htmlFor="capacity">Filter by Capacity: </label>
+            <select
+              id="capacity"
+              value={capacityFilter}
+              onChange={(e) => setCapacityFilter(e.target.value)}
+            >
+              <option value="">All Capacities</option>
+              <option value="2">2 People</option>
+              <option value="4">4 People</option>
+              <option value="6">6 People</option>
+            </select>
+          </div>
+
+          <div className="indicator">
+            <div className="indicator-item">
               <div className="grey"></div>
               <span>Un-Reserved</span>
             </div>
-            <div className="red-info">
+            <div className="indicator-item">
               <div className="red"></div>
               <span>Reserved</span>
             </div>
           </div>
         </div>
+
         <div className="table-button-container">
-          {sortedTables.map((table) => (
+          {filteredTables.map((table) => (
             <div key={table.number} className="table-button">
               <button
                 onClick={() =>

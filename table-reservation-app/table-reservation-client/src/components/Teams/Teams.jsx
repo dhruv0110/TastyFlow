@@ -7,7 +7,7 @@ import teamsThree from './Images/teamsThree.jpg'
 export const Teams = () => {
   return (
     <>
-      <section className="team-section">
+      <section className="container team-section">
         <h4 className="ourTeam">Our Team</h4>
         <h1 className="title">Our Culinary Artist</h1>
         <p className="subtitle">

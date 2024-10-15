@@ -98,4 +98,8 @@
         width: calc(100% - 40px); /* Full width minus some padding */
         border-radius: 30px; /* Keep the button rounded */
     }
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }

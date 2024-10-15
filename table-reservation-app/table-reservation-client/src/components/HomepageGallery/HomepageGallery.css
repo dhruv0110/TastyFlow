@@ -24,7 +24,7 @@
   
   .marquee-content {
     display: flex;
-    width: 50%; /* Each content block takes 50% of the marquee width */
+    width: 49.2%; /* Each content block takes 50% of the marquee width */
   }
   
   .marquee img {

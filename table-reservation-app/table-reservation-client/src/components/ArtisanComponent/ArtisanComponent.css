@@ -1,12 +1,14 @@
 /* src/components/ArtisanComponent.css */
 
 .artisan-container {
-    margin: 5rem 0;
+    max-width: 1400px;
+    
+    margin-top: 5rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     background-color: #fff;
-    width: 100%;
+    /* width: 100%; */
     flex-wrap: wrap; /* Wrap content for smaller screens */
   }
   

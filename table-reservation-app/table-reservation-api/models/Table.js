@@ -19,6 +19,10 @@ const tableSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
+  capacity: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Table', tableSchema);

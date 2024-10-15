@@ -20,8 +20,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     flex-wrap: wrap; /* Allow wrapping */
+    --bs-gutter-x: 0;
 }
 
 .navbar-logo {
