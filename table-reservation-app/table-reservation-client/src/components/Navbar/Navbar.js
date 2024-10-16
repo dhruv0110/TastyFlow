@@ -35,11 +35,7 @@ const Navbar = (props) => {
   useEffect(() => {
     const getUserDetails = async () => {
       const userData = await fetchUserDetails();
-      if(localStorage.getItem("token")){
-        setUserDetails(userData);
-      }else{
-        navigate("/");
-      }
+     
        // eslint-disable-next-line
       if (userData) {
         setUserDetails(userData); // Set userDetails to the fetched user's details
