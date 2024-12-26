@@ -4,6 +4,8 @@ import Slider from 'react-slick';
 import TestimonialCards from './TestimonialCards';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Images
 import david from './Images/david.jpg';
