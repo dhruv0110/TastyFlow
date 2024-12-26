@@ -8,6 +8,7 @@ function TableShow(props) {
   const [tables, setTables] = useState([]);
   const [tableNumber, setTableNumber] = useState('');
   const [tableCapacity, setTableCapacity] = useState(''); // State for table capacity
+  const [tableSlot, setTableSlot] = useState('');
   const [loadingTable, setLoadingTable] = useState(null); // State for loading spinner
   const [addingTable, setAddingTable] = useState(false); // State to show a loading spinner when adding a table
 
@@ -25,21 +26,23 @@ function TableShow(props) {
   };
 
   const addTable = async () => {
-    if (!tableNumber || !tableCapacity) {
-      props.showAlert('Table number and capacity are required', 'error');
+    if (!tableNumber || !tableCapacity || !tableSlot) {
+      props.showAlert('Table number, capacity, and slot are required', 'error');
       return;
     }
-
+  
     try {
       setAddingTable(true); // Show loading spinner while adding a table
-      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber, capacity: tableCapacity });
+      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber, capacity: tableCapacity, slot: tableSlot });
       props.showAlert('Table added', 'success');
       fetchTables();
       setTableNumber('');
       setTableCapacity('');
+      setTableSlot('');
     } catch (error) {
       console.error('Error adding table:', error);
-      props.showAlert('Error adding table', 'error');
+      const errorMessage = error.response?.data?.message || 'Error adding table';
+      props.showAlert(errorMessage, 'error'); // Show error message from backend
     } finally {
       setAddingTable(false); // Hide loading spinner after table is added
     }
@@ -104,6 +107,13 @@ function TableShow(props) {
             placeholder="Enter table capacity"
             className="table-input"
           />
+          <input 
+            type="number" 
+            value={tableSlot}
+            onChange={(e) => setTableSlot(e.target.value)}
+            placeholder="Enter table slot"
+            className="table-input"
+          />
           <button onClick={addTable} className="add-button" disabled={addingTable}>
             {addingTable ? <CustomSpinner /> : 'Add Table'}
           </button>
@@ -111,7 +121,7 @@ function TableShow(props) {
 
         <div className='table-list'>
           {sortedTables.map(table => (
-            <div key={table.number} className='table-item'>
+            <div key={table._id} className='table-item'>
               <button
                 onClick={() => table.reserved && unreserveTable(table.number)}
                 className={table.reserved ? 'unreserve-button' : 'reserve-button'}
@@ -122,7 +132,7 @@ function TableShow(props) {
                     <CustomSpinner />
                   </div>
                 ) : (
-                  `Table ${table.number}`
+                  `Table ${table.number} (Slot: ${table.slot})`
                 )}
               </button>
 

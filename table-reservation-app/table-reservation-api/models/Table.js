@@ -4,7 +4,15 @@ const tableSchema = new mongoose.Schema({
   number: {
     type: Number,
     required: true,
-    unique: true,
+    unique: false
+  },
+  capacity: {
+    type: Number,
+    required: true,
+  },
+  slot: {
+    type: Number,
+    required: true,
   },
   reserved: {
     type: Boolean,
@@ -19,10 +27,9 @@ const tableSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
-  capacity: {
-    type: Number,
-    required: true,
-  },
 });
+
+// Creating a compound index to ensure that the combination of number and slot is unique
+tableSchema.index({ number: 1, slot: 1 }, { unique: true });
 
 module.exports = mongoose.model('Table', tableSchema);
