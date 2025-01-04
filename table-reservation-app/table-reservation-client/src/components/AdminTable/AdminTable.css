@@ -1,0 +1,61 @@
+.admin-page-section {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #1b1c1f;
+    color: #fff;
+    box-sizing: border-box;
+  }
+  
+  /* Review Page Styling */
+  .admin-page-section .admin-page {
+    width: 100%;
+    max-width: 1225px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #1B1C1F;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-top: 1.5px solid #a9a9a9;
+    margin: 0 auto;
+    overflow: auto;
+  }
+  
+  .slot-btn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    border-radius: 2px;
+  }
+  
+  .slot-btn .btn {
+    flex: 1;
+    min-width: 300px;
+    padding: 1rem;
+    background-color: #333;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .slot-btn .btn:active{
+    color : white;
+  }
+  
+  .slot-btn .btn:hover {
+    background-color: #555;
+  }
+  
+  .admin-page-section .header {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #ff4135; /* Accent color */
+    border-bottom: 2px solid #ff4135;
+    padding-bottom: 1rem;
+  }

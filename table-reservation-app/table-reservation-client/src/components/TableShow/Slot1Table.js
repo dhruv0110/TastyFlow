@@ -4,7 +4,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import CustomSpinner from '../CustomSpinner/CustomSpinner'; // Import custom spinner
 import './TableShow.css';
 
-function TableShow(props) {
+function Slot1Table(props) {
   const [tables, setTables] = useState([]);
   const [tableNumber, setTableNumber] = useState('');
   const [tableCapacity, setTableCapacity] = useState(''); // State for table capacity
@@ -17,7 +17,7 @@ function TableShow(props) {
 
   const fetchTables = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/tables');
+      const response = await axios.get('http://localhost:5000/api/slot1');
       setTables(response.data);
     } catch (error) {
       console.error('Error fetching tables:', error);
@@ -32,7 +32,7 @@ function TableShow(props) {
   
     try {
       setAddingTable(true); // Show loading spinner while adding a table
-      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber, capacity: tableCapacity });
+      await axios.post('http://localhost:5000/api/slot1/add', { number: tableNumber, capacity: tableCapacity });
       props.showAlert('Table added', 'success');
       fetchTables();
       setTableNumber('');
@@ -48,7 +48,7 @@ function TableShow(props) {
 
   const deleteTable = async (number) => {
     try {
-      await axios.delete('http://localhost:5000/api/tables/delete', { data: { number } });
+      await axios.delete('http://localhost:5000/api/slot1/delete', { data: { number } });
       props.showAlert('Table deleted', 'success');
       fetchTables();
     } catch (error) {
@@ -66,7 +66,7 @@ function TableShow(props) {
         return;
       }
 
-      await axios.post('http://localhost:5000/api/tables/admin/unreserve', 
+      await axios.post('http://localhost:5000/api/slot1/admin/unreserve', 
         { number }, 
         {
           headers: { 'auth-token': token },
@@ -88,7 +88,7 @@ function TableShow(props) {
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div className='table-show'>
-        <h1 className='header'>Manage Tables</h1>
+        <h1 className='header'>Manage Tables in Slot - 1</h1>
 
         <div className='table-input-container'>
           <input 
@@ -147,4 +147,4 @@ function TableShow(props) {
   );
 }
 
-export default TableShow;
+export default Slot1Table;

@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const tableRoutes = require('./routes/tableRoutes');
+const slot1Routes = require('./routes/slot1Routes');
+const slot2Routes = require('./routes/slot2Routes');
 const userRoutes = require('./routes/userRoute');
 const foodRoute = require("./routes/foodRoute");
 const messageRoutes = require("./routes/messageRoutes");
@@ -30,7 +31,8 @@ const connectToMongo = () => {
 }
 connectToMongo();
 
-app.use('/api/tables', tableRoutes);
+app.use('/api/slot1', slot1Routes);
+app.use('/api/slot2', slot2Routes);
 app.use('/api/users', userRoutes); 
 app.use("/api/food",foodRoute);
 app.use('/api/message', messageRoutes);

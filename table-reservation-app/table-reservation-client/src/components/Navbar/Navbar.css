@@ -56,10 +56,10 @@
 }
 
 /* Button styling */
-.order-btn,
-.admin-btn,
-.auth-btn,
-.logout-btn {
+.navbar .order-btn,
+.navbar .admin-btn,
+.navbar .auth-btn,
+.navbar .logout-btn {
     text-align: center;
     border-radius: 40px;
     font-size: 1rem;

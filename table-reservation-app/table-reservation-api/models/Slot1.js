@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const tableSchema = new mongoose.Schema({
+const slot1Schema = new mongoose.Schema({
   number: {
     type: Number,
     required: true,
@@ -23,7 +23,12 @@ const tableSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
+  alwaysOne: {
+    type: Number,
+    default: 1,
+    immutable: true,
+  },
 });
 
 
-module.exports = mongoose.model('Table', tableSchema);
+module.exports = mongoose.model('Slot1', slot1Schema);
