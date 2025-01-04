@@ -141,21 +141,11 @@ const adminUnreserveTable = async (req, res) => {
 };
 
 const addTable = async (req, res) => {
-  const { number, capacity, slot } = req.body;
-
-  if (!number || !capacity || !slot) {
-    return res.status(400).json({ message: "Table number, capacity, and slot are required" });
-  }
+  const { number, capacity } = req.body;
 
   try {
-    // Check if the table with the same number and slot already exists
-    const existingTable = await Table.findOne({ number, slot });
-    if (existingTable) {
-      return res.status(400).json({ message: 'This table with the same number and slot already exists' });
-    }
-
     // Create and save the new table entry
-    const newTable = new Table({ number, capacity, slot });
+    const newTable = new Table({ number, capacity });
     await newTable.save();
 
     res.status(201).json(newTable);

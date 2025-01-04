@@ -8,7 +8,6 @@ function TableShow(props) {
   const [tables, setTables] = useState([]);
   const [tableNumber, setTableNumber] = useState('');
   const [tableCapacity, setTableCapacity] = useState(''); // State for table capacity
-  const [tableSlot, setTableSlot] = useState('');
   const [loadingTable, setLoadingTable] = useState(null); // State for loading spinner
   const [addingTable, setAddingTable] = useState(false); // State to show a loading spinner when adding a table
 
@@ -26,19 +25,18 @@ function TableShow(props) {
   };
 
   const addTable = async () => {
-    if (!tableNumber || !tableCapacity || !tableSlot) {
-      props.showAlert('Table number, capacity, and slot are required', 'error');
+    if (!tableNumber || !tableCapacity) {
+      props.showAlert('Table number and capacity required', 'error');
       return;
     }
   
     try {
       setAddingTable(true); // Show loading spinner while adding a table
-      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber, capacity: tableCapacity, slot: tableSlot });
+      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber, capacity: tableCapacity });
       props.showAlert('Table added', 'success');
       fetchTables();
       setTableNumber('');
       setTableCapacity('');
-      setTableSlot('');
     } catch (error) {
       console.error('Error adding table:', error);
       const errorMessage = error.response?.data?.message || 'Error adding table';
@@ -107,13 +105,6 @@ function TableShow(props) {
             placeholder="Enter table capacity"
             className="table-input"
           />
-          <input 
-            type="number" 
-            value={tableSlot}
-            onChange={(e) => setTableSlot(e.target.value)}
-            placeholder="Enter table slot"
-            className="table-input"
-          />
           <button onClick={addTable} className="add-button" disabled={addingTable}>
             {addingTable ? <CustomSpinner /> : 'Add Table'}
           </button>
@@ -132,7 +123,7 @@ function TableShow(props) {
                     <CustomSpinner />
                   </div>
                 ) : (
-                  `Table ${table.number} (Slot: ${table.slot})`
+                  `Table ${table.number}`
                 )}
               </button>
 

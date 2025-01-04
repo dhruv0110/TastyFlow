@@ -8,7 +8,6 @@ const TableComponent = ({ showAlert }) => {
   const [userId, setUserId] = useState("");
   const [loadingTable, setLoadingTable] = useState(null);
   const [capacityFilter, setCapacityFilter] = useState(""); // State for filtering by capacity
-  const [slotFilter, setSlotFilter] = useState(""); // State for filtering by slot
 
   useEffect(() => {
     fetchUserDetails();
@@ -90,13 +89,9 @@ const TableComponent = ({ showAlert }) => {
   const filteredTables = sortedTables.filter((table) => {
     const matchesCapacity = capacityFilter ? table.capacity === parseInt(capacityFilter) : true;
   
-    const tableSlots = Array.isArray(table.slot) ? table.slot : [table.slot];
-  
-    const matchesSlot = slotFilter
-      ? tableSlots.includes(parseInt(slotFilter)) 
-      : true;
     
-    return matchesCapacity && matchesSlot;
+    
+    return matchesCapacity;
   });
 
   return (
@@ -118,20 +113,6 @@ const TableComponent = ({ showAlert }) => {
               <option value="2">2 People</option>
               <option value="4">4 People</option>
               <option value="6">6 People</option>
-            </select>
-          </div>
-
-          <div className="slot-filter">
-            <label htmlFor="slot">Filter by Slot: </label>
-            <select
-              id="slot"
-              value={slotFilter}
-              onChange={(e) => setSlotFilter(e.target.value)}
-            >
-              <option value="">All Slots</option>
-              <option value="1">Slot 1 (5:00 to 7:00)</option>
-              <option value="2">Slot 2 (7:00 to 9:00)</option>
-              <option value="3">Slot 3 (9:00 to 11:00)</option>
             </select>
           </div>
 
@@ -168,7 +149,7 @@ const TableComponent = ({ showAlert }) => {
                     <CustomSpinner />
                   </div>
                 ) : (
-                  `Table ${table.number} (slot : ${table.slot})`
+                  `Table ${table.number}`
                 )}
               </button>
               {table.reserved && (
