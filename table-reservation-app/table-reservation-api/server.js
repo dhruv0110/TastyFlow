@@ -48,8 +48,3 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 
-
-
-// twilio
-// Recovery code
-// 2TUCYKJXM6WDZ11CV4WQPWNM
