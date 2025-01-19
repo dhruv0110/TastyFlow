@@ -18,6 +18,7 @@
 }
 
 .filter-indicator-container {
+    margin-top: 4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,6 +26,15 @@
     margin-bottom: 2rem;
     box-sizing: border-box;
 }
+.table-heading .header {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #ff4135; /* Accent color */
+    border-bottom: 2px solid #ff4135;
+    padding-bottom: 1rem;
+  }
 
 .capacity-filter {
     display: flex;

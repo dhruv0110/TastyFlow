@@ -107,7 +107,7 @@ const TableComponent = ({ showAlert }) => {
     <div className="table-container">
       <div className="container">
         <div className="table-heading">
-          <h1>Reserve Your Table</h1>
+        <h1 className="header">Reserve Your Table</h1>
         </div>
 
         <div className="filter-indicator-container">

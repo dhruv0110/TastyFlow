@@ -68,7 +68,7 @@
     transition: background-color 0.3s ease;
 }
 
-.order-btn {
+.navbar .order-btn {
     background-color: #ff4135;
     color: #fff;
     padding: 0.75rem 1rem;
@@ -162,7 +162,7 @@
         justify-content: space-between;
     }
     /* Button styling */
-.order-btn,
+.navbar .order-btn,
 .admin-btn,
 .auth-btn,
 .logout-btn {

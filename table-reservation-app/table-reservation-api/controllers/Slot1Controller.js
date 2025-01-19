@@ -40,7 +40,7 @@ const reserveSlot = async (req, res) => {
         from: 'dhruvsheth01102003@gmail.com',
         to: user.email,
         subject: 'Slot Reserved',
-        text: `Thank you for reserving a slot. Your slot number ${number} is reserved successfully.`
+        text: `Thank you for reserving a slot. Your Table${slot.number} of slot timing 5:00 to 7:00 is reserved successfully.`
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
@@ -80,7 +80,7 @@ const unreserveSlot = async (req, res) => {
         from: 'dhruvsheth01102003@gmail.com',
         to: reservedByUser.email,
         subject: 'Slot Unreserved',
-        text: `Your reservation for slot number ${number} has been canceled. Please book again if needed.`
+        text: `Your reservation for Table${slot.number} of slot timing 5:00 to 7:00 has been canceled. Please book again if needed.`
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
@@ -123,7 +123,7 @@ const adminUnreserveSlot = async (req, res) => {
       from: 'dhruvsheth01102003@gmail.com',
       to: reservedByUser.email,
       subject: 'Slot Unreserved',
-      text: `Your reservation for slot number ${number} has been canceled by the admin. Please book again if needed.`
+      text: `Your reservation for Table${slot.number} of slot timing 5:00 to 7:00 has been canceled by the admin. Please book again if needed.`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
