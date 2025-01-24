@@ -136,7 +136,7 @@ const TableComponent = ({ showAlert }) => {
               <option value="4">4 People</option>
               <option value="6">6 People</option>
             </select>
-          </div> */}
+          </div>
 
           <div className="indicator">
             <div className="indicator-item">
