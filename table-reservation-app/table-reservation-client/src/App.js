@@ -17,6 +17,7 @@ import TableComponent from './components/TableComponent/TableComponent';
 import UserData from './components/UserData/UserData';
 import Reviews from './components/Reviews/Reviews';
 import UserReviews from './components/UserReviews/UserReviews';
+import About from './components/About/About';
 import AdminTable from './components/AdminTable/AdminTable';
 
 
@@ -101,6 +102,9 @@ function App() {
         <Route path="/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
         <Route path="/admin/admin-table" element={<AdminRoute element={<AdminTable   showAlert={showAlert} />} />} />
         <Route path="*" element={<Navigate to="/" />} />
+
+        {/* About Path */}
+        <Route path="/About" element={<About />} />
       </Routes>
     </Router>
   );
