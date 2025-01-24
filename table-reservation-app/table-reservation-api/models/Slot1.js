@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 
-const tableSchema = new mongoose.Schema({
+const slot1Schema = new mongoose.Schema({
   number: {
     type: Number,
     required: true,
-    unique: true,
+    unique: false
+  },
+  capacity: {
+    type: Number,
+    required: true,
   },
   reserved: {
     type: Boolean,
@@ -19,10 +23,12 @@ const tableSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
-  capacity: {
+  alwaysOne: {
     type: Number,
-    required: true,
+    default: 1,
+    immutable: true,
   },
 });
 
-module.exports = mongoose.model('Table', tableSchema);
+
+module.exports = mongoose.model('Slot1', slot1Schema);

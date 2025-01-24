@@ -62,7 +62,7 @@
   left: 130px;
 }
 
-h1 {
+.hero-section h1 {
   font-size: 4rem;
   margin: 10px 0;
   font-weight: bold;
@@ -206,7 +206,7 @@ h1 {
     padding-bottom: 4rem;
   }
 
-  h1 {
+  .hero-section h1 {
     font-size: 3.5rem;
   }
 
