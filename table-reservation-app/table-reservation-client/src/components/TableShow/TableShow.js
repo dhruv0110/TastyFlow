@@ -97,13 +97,13 @@ function TableShow(props) {
             placeholder="Enter table number"
             className="table-input"
           />
-          <input 
+          {/* <input 
             type="number" 
             value={tableCapacity}
             onChange={(e) => setTableCapacity(e.target.value)}
             placeholder="Enter table capacity"
             className="table-input"
-          />
+          /> */}
           <button onClick={addTable} className="add-button" disabled={addingTable}>
             {addingTable ? <CustomSpinner /> : 'Add Table'}
           </button>
@@ -147,3 +147,5 @@ function TableShow(props) {
 }
 
 export default TableShow;
+
+

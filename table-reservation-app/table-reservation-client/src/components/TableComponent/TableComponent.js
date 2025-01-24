@@ -98,7 +98,7 @@ const TableComponent = ({ showAlert }) => {
         </div>
 
         <div className="filter-indicator-container">
-          <div className="capacity-filter">
+          {/* <div className="capacity-filter">
             <label htmlFor="capacity">Filter by Capacity: </label>
             <select
               id="capacity"
@@ -110,7 +110,7 @@ const TableComponent = ({ showAlert }) => {
               <option value="4">4 People</option>
               <option value="6">6 People</option>
             </select>
-          </div>
+          </div> */}
 
           <div className="indicator">
             <div className="indicator-item">

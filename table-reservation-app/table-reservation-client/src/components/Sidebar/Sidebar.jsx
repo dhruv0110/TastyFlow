@@ -21,14 +21,14 @@ const Sidebar = ({showAlert}) => {
         <img src={assets.table_resrvation} alt="" />
             <p>Tables</p>
         </NavLink>
-        <NavLink to='/admin/all-users' className="sidebar-option">
+        {/* <NavLink to='/admin/all-users' className="sidebar-option">
         <i class="fa-solid fa-users" style={{fontSize:"1.3rem"}}></i>
             <p>User Data</p>
         </NavLink>
         <NavLink to='/admin/all-reviews' className="sidebar-option">
         <i class="fa-regular fa-comments" style={{fontSize:"1.3rem"}}></i>
             <p>Reviews</p>
-        </NavLink>
+        </NavLink> */}
       </div>
     </div>
   )
