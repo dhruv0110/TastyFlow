@@ -4,7 +4,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import CustomSpinner from '../CustomSpinner/CustomSpinner'; // Import custom spinner
 import './TableShow.css';
 
-function TableShow(props) {
+function Slot1Table(props) {
   const [tables, setTables] = useState([]);
   const [tableNumber, setTableNumber] = useState('');
   const [tableCapacity, setTableCapacity] = useState(''); // State for table capacity
@@ -17,7 +17,7 @@ function TableShow(props) {
 
   const fetchTables = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/tables');
+      const response = await axios.get('http://localhost:5000/api/slot1');
       setTables(response.data);
     } catch (error) {
       console.error('Error fetching tables:', error);
@@ -26,20 +26,21 @@ function TableShow(props) {
 
   const addTable = async () => {
     if (!tableNumber || !tableCapacity) {
-      props.showAlert('Table number and capacity are required', 'error');
+      props.showAlert('Table number and capacity required', 'error');
       return;
     }
-
+  
     try {
       setAddingTable(true); // Show loading spinner while adding a table
-      await axios.post('http://localhost:5000/api/tables/add', { number: tableNumber, capacity: tableCapacity });
+      await axios.post('http://localhost:5000/api/slot1/add', { number: tableNumber, capacity: tableCapacity });
       props.showAlert('Table added', 'success');
       fetchTables();
       setTableNumber('');
       setTableCapacity('');
     } catch (error) {
       console.error('Error adding table:', error);
-      props.showAlert('Error adding table', 'error');
+      const errorMessage = error.response?.data?.message || 'Error adding table';
+      props.showAlert(errorMessage, 'error'); // Show error message from backend
     } finally {
       setAddingTable(false); // Hide loading spinner after table is added
     }
@@ -47,7 +48,7 @@ function TableShow(props) {
 
   const deleteTable = async (number) => {
     try {
-      await axios.delete('http://localhost:5000/api/tables/delete', { data: { number } });
+      await axios.delete('http://localhost:5000/api/slot1/delete', { data: { number } });
       props.showAlert('Table deleted', 'success');
       fetchTables();
     } catch (error) {
@@ -65,7 +66,7 @@ function TableShow(props) {
         return;
       }
 
-      await axios.post('http://localhost:5000/api/tables/admin/unreserve', 
+      await axios.post('http://localhost:5000/api/slot1/admin/unreserve', 
         { number }, 
         {
           headers: { 'auth-token': token },
@@ -87,7 +88,7 @@ function TableShow(props) {
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div className='table-show'>
-        <h1 className='header'>Manage Tables</h1>
+        <h1 className='header'>Manage Tables in Slot - 1</h1>
 
         <div className='table-input-container'>
           <input 
@@ -111,7 +112,7 @@ function TableShow(props) {
 
         <div className='table-list'>
           {sortedTables.map(table => (
-            <div key={table.number} className='table-item'>
+            <div key={table._id} className='table-item'>
               <button
                 onClick={() => table.reserved && unreserveTable(table.number)}
                 className={table.reserved ? 'unreserve-button' : 'reserve-button'}
@@ -146,4 +147,4 @@ function TableShow(props) {
   );
 }
 
-export default TableShow;
+export default Slot1Table;

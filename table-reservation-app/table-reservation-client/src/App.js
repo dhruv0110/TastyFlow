@@ -9,7 +9,8 @@ import Signup from './components/LoginSignup/signup';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import Admin from './components/Sidebar/Admin';
-import TableShow from './components/TableShow/TableShow';
+import Slot1Table from './components/TableShow/Slot1Table';
+import Slot2Table from './components/TableShow/Slot2Table';
 import Add from './components/Add/Add';
 import List from './components/List/List';
 import TableComponent from './components/TableComponent/TableComponent';
@@ -17,6 +18,7 @@ import UserData from './components/UserData/UserData';
 import Reviews from './components/Reviews/Reviews';
 import UserReviews from './components/UserReviews/UserReviews';
 import About from './components/About/About';
+import AdminTable from './components/AdminTable/AdminTable';
 
 
 function PrivateRoute({ element, ...rest }) {
@@ -91,12 +93,14 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword showAlert={showAlert} />} />
         <Route path="/table-reserve" element={localStorage.getItem("token") ? <TableComponent showAlert={showAlert} /> : <Navigate to="/login" />} />
         <Route path="/admin" element={<AdminRoute element={<Admin showAlert={showAlert} />} />} />
-        <Route path="/admin/table" element={<AdminRoute element={<TableShow showAlert={showAlert} />} />} />
+        <Route path="/admin/slot1" element={<AdminRoute element={<Slot1Table showAlert={showAlert} />} />} />
+        <Route path="/admin/slot2" element={<AdminRoute element={<Slot2Table showAlert={showAlert} />} />} />
         <Route path="/list" element={<AdminRoute element={<List showAlert={showAlert} />} />} />
         <Route path="/admin/add" element={<AdminRoute element={<Add showAlert={showAlert} />} />} />
         <Route path="/admin/all-users" element={<AdminRoute element={<UserData showAlert={showAlert} />} />} />
         <Route path="/admin/all-reviews" element={<AdminRoute element={<Reviews showAlert={showAlert} />} />} />
         <Route path="/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
+        <Route path="/admin/admin-table" element={<AdminRoute element={<AdminTable   showAlert={showAlert} />} />} />
         <Route path="*" element={<Navigate to="/" />} />
 
         {/* About Path */}

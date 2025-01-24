@@ -7,12 +7,14 @@ const TableComponent = ({ showAlert }) => {
   const [tables, setTables] = useState([]);
   const [userId, setUserId] = useState("");
   const [loadingTable, setLoadingTable] = useState(null);
-  const [capacityFilter, setCapacityFilter] = useState(""); // State for filtering by capacity
+  const [capacityFilter, setCapacityFilter] = useState(""); // Filter by capacity
+  const [slotFilter, setSlotFilter] = useState("1"); // State for Slot1 or Slot2
 
   useEffect(() => {
     fetchUserDetails();
     fetchTables();
-  }, []);
+    // eslint-disable-next-line
+  }, [slotFilter]);
 
   const fetchUserDetails = async () => {
     try {
@@ -35,7 +37,11 @@ const TableComponent = ({ showAlert }) => {
 
   const fetchTables = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/tables");
+      const endpoint =
+        slotFilter === "1"
+          ? "http://localhost:5000/api/slot1"
+          : "http://localhost:5000/api/slot2";
+      const response = await axios.get(endpoint);
       setTables(response.data);
     } catch (error) {
       console.error("Error fetching tables:", error);
@@ -49,9 +55,14 @@ const TableComponent = ({ showAlert }) => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
+      const endpoint =
+        slotFilter === "1"
+          ? "http://localhost:5000/api/slot1"
+          : "http://localhost:5000/api/slot2";
+
       if (isReserved && reservedBy === userId) {
         await axios.post(
-          "http://localhost:5000/api/tables/unreserve",
+          `${endpoint}/unreserve`,
           { number },
           {
             headers: { "auth-token": token },
@@ -60,7 +71,7 @@ const TableComponent = ({ showAlert }) => {
         showAlert("Table unreserved", "success");
       } else if (!isReserved) {
         await axios.post(
-          "http://localhost:5000/api/tables/reserve",
+          `${endpoint}/reserve`,
           { number },
           {
             headers: { "auth-token": token },
@@ -85,19 +96,34 @@ const TableComponent = ({ showAlert }) => {
   };
 
   const sortedTables = [...tables].sort((a, b) => a.number - b.number);
-
-  const filteredTables = capacityFilter
-    ? sortedTables.filter((table) => table.capacity === parseInt(capacityFilter))
-    : sortedTables;
+  const filteredTables = sortedTables.filter((table) => {
+    const matchesCapacity = capacityFilter
+      ? table.capacity === parseInt(capacityFilter)
+      : true;
+    return matchesCapacity;
+  });
 
   return (
     <div className="table-container">
       <div className="container">
         <div className="table-heading">
-          <h1>Reserve Your Table</h1>
+        <h1 className="header">Reserve Your Table</h1>
         </div>
 
         <div className="filter-indicator-container">
+          <div className="slot-filter">
+            <label htmlFor="slot">Filter by Slot: </label>
+            <select
+              id="slot"
+              value={slotFilter}
+              onChange={(e) => setSlotFilter(e.target.value)}
+            >
+              {/* <option value="">Choose Slot</option> */}
+              <option value="1">5:00 TO 7:00</option>
+              <option value="2">7:00 TO 9:00</option>
+            </select>
+          </div>
+
           <div className="capacity-filter">
             <label htmlFor="capacity">Filter by Capacity: </label>
             <select
@@ -110,7 +136,7 @@ const TableComponent = ({ showAlert }) => {
               <option value="4">4 People</option>
               <option value="6">6 People</option>
             </select>
-          </div>
+          </div> */}
 
           <div className="indicator">
             <div className="indicator-item">
