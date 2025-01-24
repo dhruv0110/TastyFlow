@@ -16,6 +16,7 @@ import TableComponent from './components/TableComponent/TableComponent';
 import UserData from './components/UserData/UserData';
 import Reviews from './components/Reviews/Reviews';
 import UserReviews from './components/UserReviews/UserReviews';
+import About from './components/About/About';
 
 
 function PrivateRoute({ element, ...rest }) {
@@ -97,6 +98,9 @@ function App() {
         <Route path="/admin/all-reviews" element={<AdminRoute element={<Reviews showAlert={showAlert} />} />} />
         <Route path="/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
         <Route path="*" element={<Navigate to="/" />} />
+
+        {/* About Path */}
+        <Route path="/About" element={<About />} />
       </Routes>
     </Router>
   );

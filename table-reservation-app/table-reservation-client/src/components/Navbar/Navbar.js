@@ -135,7 +135,7 @@ const Navbar = (props) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" onClick={closeNavbar}>About</Link>
+                <Link className="nav-link" onClick={closeNavbar} to="./About">About</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" onClick={closeNavbar}>Menu</Link>
