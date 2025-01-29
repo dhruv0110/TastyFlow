@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const slot2Schema = new mongoose.Schema({
+const slot3Schema = new mongoose.Schema({
   number: {
     type: Number,
     required: true,
@@ -31,4 +31,4 @@ const slot2Schema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Slot2', slot2Schema);
+module.exports = mongoose.model('Slot3', slot3Schema);

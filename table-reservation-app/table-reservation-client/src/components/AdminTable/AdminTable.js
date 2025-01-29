@@ -1,4 +1,3 @@
-// components/UserReviews/UserReviews.js
 import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import "./AdminTable.css";
@@ -9,27 +8,28 @@ const AdminTable = () => {
     <div className="admin-page-section">
       <Sidebar />
       <div className="admin-page">
-      <h1 className="header">Admin Table</h1>
+        <h1 className="header">Admin Table</h1>
         <div className="slot-btn">
-        <Link to="/admin/slot1">
-          <button className="btn order-btn" type="button">
-            slot 1
-          </button>
-        </Link>
-        <Link to="/admin/slot2">
-          <button className="btn order-btn" type="button">
-            slot 2
-          </button>
-        </Link>
-        <Link to="/admin/slot3">
-          <button className="btn order-btn" type="button">
-            slot 3
-          </button>
-        </Link>
+          {/* Dynamically link to different slots */}
+          <Link to="/admin/slot/1">
+            <button className="btn order-btn" type="button">
+              Slot 1
+            </button>
+          </Link>
+          <Link to="/admin/slot/2">
+            <button className="btn order-btn" type="button">
+              Slot 2
+            </button>
+          </Link>
+          <Link to="/admin/slot/3">
+            <button className="btn order-btn" type="button">
+              Slot 3
+            </button>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default AdminTable;
+export default AdminTable;

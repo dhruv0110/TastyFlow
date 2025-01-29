@@ -1,72 +1,83 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Sidebar from '../Sidebar/Sidebar';
-import CustomSpinner from '../CustomSpinner/CustomSpinner'; // Import custom spinner
+import CustomSpinner from '../CustomSpinner/CustomSpinner';
+import { useParams } from 'react-router-dom'; 
 import './TableShow.css';
 
-function Slot1Table(props) {
+function SlotTable(props) {
+  const { slotNumber } = useParams(); 
   const [tables, setTables] = useState([]);
   const [tableNumber, setTableNumber] = useState('');
-  const [tableCapacity, setTableCapacity] = useState(''); // State for table capacity
-  const [loadingTable, setLoadingTable] = useState(null); // State for loading spinner
-  const [addingTable, setAddingTable] = useState(false); // State to show a loading spinner when adding a table
+  const [tableCapacity, setTableCapacity] = useState('');
+  const [loadingTable, setLoadingTable] = useState(null);
+  const [addingTable, setAddingTable] = useState(false);
 
-  useEffect(() => {
-    fetchTables();
-  }, []);
-
-  const fetchTables = async () => {
+  const fetchTables = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/slot1');
+      const response = await axios.get(`http://localhost:5000/api/slot/${slotNumber}`);
       setTables(response.data);
     } catch (error) {
       console.error('Error fetching tables:', error);
     }
-  };
+  }, [slotNumber]); 
+
+  useEffect(() => {
+    fetchTables();
+  }, [fetchTables]); 
 
   const addTable = async () => {
     if (!tableNumber || !tableCapacity) {
       props.showAlert('Table number and capacity required', 'error');
       return;
     }
-  
+
     try {
-      setAddingTable(true); // Show loading spinner while adding a table
-      await axios.post('http://localhost:5000/api/slot1/add', { number: tableNumber, capacity: tableCapacity });
+      setAddingTable(true);
+      await axios.post(`http://localhost:5000/api/slot/${slotNumber}/add`, {
+        number: tableNumber,
+        capacity: tableCapacity,
+      });
       props.showAlert('Table added', 'success');
       fetchTables();
       setTableNumber('');
       setTableCapacity('');
     } catch (error) {
       console.error('Error adding table:', error);
-      const errorMessage = error.response?.data?.message || 'Error adding table';
-      props.showAlert(errorMessage, 'error'); // Show error message from backend
+      props.showAlert(error.response?.data?.message || 'Error adding table', 'error');
     } finally {
-      setAddingTable(false); // Hide loading spinner after table is added
+      setAddingTable(false);
     }
   };
 
   const deleteTable = async (number) => {
     try {
-      await axios.delete('http://localhost:5000/api/slot1/delete', { data: { number } });
+      // Send the delete request to the correct slot (slotNumber is obtained via useParams)
+      await axios.delete(`http://localhost:5000/api/slot/${slotNumber}/delete`, { 
+        data: { number } // Pass the number of the table to delete in the body
+      });
       props.showAlert('Table deleted', 'success');
-      fetchTables();
+      fetchTables(); // Refresh the table list
     } catch (error) {
       console.error('Error deleting table:', error);
       props.showAlert('Error deleting table', 'error');
     }
   };
+  
+  
+  
+  
 
   const unreserveTable = async (number) => {
     try {
-      setLoadingTable(number); // Set loading state for the table being unreserved
+      setLoadingTable(number);
       const token = localStorage.getItem('token');
       if (!token) {
         console.error('No token found');
         return;
       }
 
-      await axios.post('http://localhost:5000/api/slot1/admin/unreserve', 
+      await axios.post(`http://localhost:5000/api/slot/${slotNumber}/admin/unreserve`, 
         { number }, 
         {
           headers: { 'auth-token': token },
@@ -78,7 +89,7 @@ function Slot1Table(props) {
       console.error('Error unreserving table:', error);
       props.showAlert('Error unreserving table', 'error');
     } finally {
-      setLoadingTable(null); // Reset loading state after unreserving table
+      setLoadingTable(null);
     }
   };
 
@@ -88,7 +99,7 @@ function Slot1Table(props) {
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div className='table-show'>
-        <h1 className='header'>Manage Tables in Slot - 1</h1>
+        <h1 className='header'>Manage Tables in Slot - {slotNumber}</h1>
 
         <div className='table-input-container'>
           <input 
@@ -147,4 +158,4 @@ function Slot1Table(props) {
   );
 }
 
-export default Slot1Table;
+export default SlotTable;

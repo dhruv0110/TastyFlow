@@ -1,8 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const slot1Routes = require('./routes/slot1Routes');
-const slot2Routes = require('./routes/slot2Routes');
+const slotRoutes = require('./routes/slotRoutes');
 const userRoutes = require('./routes/userRoute');
 const foodRoute = require("./routes/foodRoute");
 const messageRoutes = require("./routes/messageRoutes");
@@ -12,12 +11,12 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: 'http://localhost:3000', // Replace with your frontend's origin
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'DELETE', 'PUT'] // Make sure DELETE is allowed
 }));
 app.use(express.json());
 
 const mongoUrl = "mongodb://127.0.0.1:27017/register?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.1";
-
 
 const connectToMongo = () => {
     main()
@@ -31,20 +30,10 @@ const connectToMongo = () => {
 }
 connectToMongo();
 
-app.use('/api/slot1', slot1Routes);
-app.use('/api/slot2', slot2Routes);
-app.use('/api/users', userRoutes); 
-app.use("/api/food",foodRoute);
+app.use('/api/slot', slotRoutes); // Use the unified route for slots
+app.use('/api/users', userRoutes);
+app.use("/api/food", foodRoute);
 app.use('/api/message', messageRoutes);
-app.use("/uploads",express.static('uploads'))
+app.use("/uploads", express.static('uploads'));
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-
-
-
-
-
-
-

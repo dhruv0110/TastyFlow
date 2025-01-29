@@ -10,6 +10,7 @@ const TableComponent = ({ showAlert }) => {
   const [capacityFilter, setCapacityFilter] = useState(""); // Filter by capacity
   const [slotFilter, setSlotFilter] = useState("1"); // State for Slot1 or Slot2
 
+  // Fetch user details (assuming you are using a token for authentication)
   useEffect(() => {
     fetchUserDetails();
     fetchTables();
@@ -35,12 +36,10 @@ const TableComponent = ({ showAlert }) => {
     }
   };
 
+  // Fetch tables for the selected slot (Slot1 or Slot2)
   const fetchTables = async () => {
     try {
-      const endpoint =
-        slotFilter === "1"
-          ? "http://localhost:5000/api/slot1"
-          : "http://localhost:5000/api/slot2";
+      const endpoint = `http://localhost:5000/api/slot/${slotFilter}`; // Dynamically set the slot number
       const response = await axios.get(endpoint);
       setTables(response.data);
     } catch (error) {
@@ -55,10 +54,7 @@ const TableComponent = ({ showAlert }) => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const endpoint =
-        slotFilter === "1"
-          ? "http://localhost:5000/api/slot1"
-          : "http://localhost:5000/api/slot2";
+      const endpoint = `http://localhost:5000/api/slot/${slotFilter}`;
 
       if (isReserved && reservedBy === userId) {
         await axios.post(
@@ -79,10 +75,7 @@ const TableComponent = ({ showAlert }) => {
         );
         showAlert("Table reserved", "success");
       } else {
-        showAlert(
-          "You do not have permission to unreserve this table",
-          "danger"
-        );
+        showAlert("You do not have permission to unreserve this table", "danger");
         setLoadingTable(null);
         return;
       }
@@ -95,6 +88,7 @@ const TableComponent = ({ showAlert }) => {
     }
   };
 
+  // Sort tables by table number and filter by capacity
   const sortedTables = [...tables].sort((a, b) => a.number - b.number);
   const filteredTables = sortedTables.filter((table) => {
     const matchesCapacity = capacityFilter
@@ -107,7 +101,7 @@ const TableComponent = ({ showAlert }) => {
     <div className="table-container">
       <div className="container">
         <div className="table-heading">
-        <h1 className="header">Reserve Your Table</h1>
+          <h1 className="header">Reserve Your Table</h1>
         </div>
 
         <div className="filter-indicator-container">
@@ -118,9 +112,9 @@ const TableComponent = ({ showAlert }) => {
               value={slotFilter}
               onChange={(e) => setSlotFilter(e.target.value)}
             >
-              {/* <option value="">Choose Slot</option> */}
               <option value="1">5:00 TO 7:00</option>
               <option value="2">7:00 TO 9:00</option>
+              <option value="3">9:00 TO 11:00</option>
             </select>
           </div>
 
