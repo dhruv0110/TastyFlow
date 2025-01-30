@@ -20,6 +20,9 @@ import UserReviews from './components/UserReviews/UserReviews';
 import About from './components/About/About';
 import AdminTable from './components/AdminTable/AdminTable';
 import SlotTable from './components/TableShow/SlotTable';
+import UsersList from './components/UsersList/UsersList';
+import UserFoodPage from './components/UserFoodPage/UserFoodPage';
+import Invoices from './components/Invoice/Invoice';
 
 
 function PrivateRoute({ element, ...rest }) {
@@ -103,6 +106,11 @@ function App() {
         <Route path="/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
         <Route path="/admin/admin-table" element={<AdminRoute element={<AdminTable   showAlert={showAlert} />} />} />
         <Route path="/admin/slot/:slotNumber" element={<AdminRoute element={<SlotTable showAlert={showAlert} />} />} />
+        <Route path="/users" element={<AdminRoute element={<UsersList showAlert={showAlert} />} />} />
+        <Route path="/user/:userId" element={<AdminRoute element={<UserFoodPage showAlert={showAlert} />} />} />
+        <Route path="/invoice" element={<AdminRoute element={<Invoices showAlert={showAlert} />} />} />
+
+        
         <Route path="*" element={<Navigate to="/" />} />
 
         {/* About Path */}

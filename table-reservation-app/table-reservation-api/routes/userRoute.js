@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
-const { createUser, loginUser, getUser, forgotPassword, verifyOtp, resetPassword, getAllUsers, getUserId } = require('../controllers/userController');
+const { createUser, loginUser, getUser, forgotPassword, verifyOtp, resetPassword, getAllUsers, getUserId, addFoodToUser } = require('../controllers/userController');
 const fetchUser = require('../middleware/fetchUser');
 
 // Create a User
@@ -38,5 +38,8 @@ router.post('/reset-password', resetPassword);
 router.get('/admin/all-users', getAllUsers);
 
 //Get user by id
-router.get("/admin/getuser/:id",fetchUser,getUserId);
+router.get("/admin/getuser/:id", fetchUser ,getUserId);
+
+router.post('/:userId/add-food', addFoodToUser);
+
 module.exports = router;

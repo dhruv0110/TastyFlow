@@ -1,0 +1,108 @@
+/* src/components/UserFoodPage/UserFoodPage.css */
+
+.user-food-page {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1225px;
+    color: #fff; /* White text color for better readability */
+    font-size: 14px;
+    background-color: #1B1C1F; /* Dark background for the list container */
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+    border-top: 1.5px solid #a9a9a9; /* Border to match List.css */
+    margin: 0 auto;
+  }
+  
+  .food-list, .selected-foods {
+    width: 48%; /* Set the width of both sections to be nearly equal */
+    padding: 15px;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .food-list h3, .selected-foods h3 {
+    font-size: 1.5rem;
+    color: #ff4135; /* Accent color */
+    border-bottom: 2px solid #ff4135;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .food-list ul, .selected-foods ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .food-list li, .selected-foods li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  
+  .food-list li button, .selected-foods li button {
+    background-color: #444;
+    color: #fff;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  .selected-foods li {
+    font-size: 1.2rem;
+  }
+  
+  .selected-foods button {
+    margin: 0 5px;
+  }
+  
+  h4 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #ff4135;
+  }
+  
+  .selected-foods button {
+    background-color: #ff4135;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1.1rem;
+  }
+  
+  button:hover {
+    background-color: #ff6f61;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .user-food-page {
+      flex-direction: column;
+      padding: 10px;
+    }
+  
+    .food-list, .selected-foods {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .food-list li, .selected-foods li {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .food-list li button, .selected-foods li button {
+      width: 100%;
+    }
+  }
+  

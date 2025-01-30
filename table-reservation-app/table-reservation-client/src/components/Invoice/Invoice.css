@@ -1,0 +1,173 @@
+/* Invoice container and layout */
+.invoice-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Section */
+  .invoice-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .invoice-info {
+    width: 50%;
+    text-align: left;
+  }
+  
+  .invoice-info h4 {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .invoice-info p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .company-info {
+    width: 45%;
+    text-align: right;
+  }
+  
+  .company-info h3 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .company-info p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* User Details Section */
+  .user-details {
+    margin-top: 20px;
+  }
+  
+  .user-details h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .user-details p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Food Details Section */
+  .food-details {
+    margin-top: 20px;
+  }
+  
+  .food-details h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .food-details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .food-details table th,
+  .food-details table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .food-details table th {
+    background-color: #f4f4f4;
+  }
+  
+  .food-details table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Total Summary Section */
+  .total-summary {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  .total-summary .total,
+  .total-summary .tax,
+  .total-summary .grand-total {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .total-summary .grand-total h4 {
+    font-size: 1.6rem;
+    color: #e74c3c;
+  }
+  
+  .total-summary p {
+    font-size: 1.1rem;
+  }
+  
+  .total-summary span {
+    font-size: 1.3rem;
+    color: #e74c3c;
+  }
+  
+  /* Print Button */
+  .print-invoice-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #2980b9;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  /* Footer Section */
+  .invoice-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .invoice-footer p {
+    margin: 5px 0;
+  }
+  
+  /* Print-specific styles */
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+  
+    .invoice-container, .invoice-container * {
+      visibility: visible;
+    }
+  
+    .invoice-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .print-invoice-btn {
+      display: none;
+    }
+  }
+  

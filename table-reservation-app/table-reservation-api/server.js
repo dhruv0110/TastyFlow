@@ -5,6 +5,7 @@ const slotRoutes = require('./routes/slotRoutes');
 const userRoutes = require('./routes/userRoute');
 const foodRoute = require("./routes/foodRoute");
 const messageRoutes = require("./routes/messageRoutes");
+const invoiceRoutes = require("./routes/InvoiceRoute");
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,6 +35,7 @@ app.use('/api/slot', slotRoutes); // Use the unified route for slots
 app.use('/api/users', userRoutes);
 app.use("/api/food", foodRoute);
 app.use('/api/message', messageRoutes);
+app.use("/api/invoice", invoiceRoutes);
 app.use("/uploads", express.static('uploads'));
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

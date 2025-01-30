@@ -29,6 +29,10 @@ const Sidebar = ({showAlert}) => {
         <i className="fa-regular fa-comments" style={{fontSize:"1.3rem"}}></i>
             <p>Reviews</p>
         </NavLink>
+        <NavLink to='/users' className="sidebar-option">
+        <i className="fa-regular fa-comments" style={{fontSize:"1.3rem"}}></i>
+            <p>Nav</p>
+        </NavLink>
       </div>
     </div>
   )
