@@ -104,7 +104,6 @@ const getUserId = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-      console.log("User fetched from DB:", user); // Log the fetched user data
       res.json(user);
     } catch (error) {
       console.error(error.message);
@@ -224,7 +223,6 @@ const addFoodToUser = async (req, res) => {
     const { foods } = req.body;     // Array of food items and their quantities
 
     try {
-        console.log("Adding food to user:", userId, foods); // Log incoming data for debugging
 
         const user = await User.findById(userId);  // Fetch user by userId
         if (!user) {

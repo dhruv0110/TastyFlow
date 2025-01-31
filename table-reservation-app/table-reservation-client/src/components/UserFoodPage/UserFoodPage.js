@@ -3,25 +3,26 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar"; // Sidebar component import
 import Invoice from "../Invoice/Invoice"; // Import the Invoice component
 import './UserFoodPage.css'; // Add your CSS styles
+import { toast } from "react-toastify";
 
 const UserFoodPage = () => {
-  const { userId } = useParams(); // Get the user ID from the URL
-  const [foods, setFoods] = useState([]); // Store all food items
-  const [selectedFoods, setSelectedFoods] = useState([]); // Store selected food items
-  const [total, setTotal] = useState(0); // Total amount for selected foods
-  const [user, setUser] = useState(null); // Store user data
-  const [invoiceGenerated, setInvoiceGenerated] = useState(false); // Track if invoice is generated
-  const [invoiceId, setInvoiceId] = useState(null); // Store the invoiceId after creation
+  const { userId } = useParams();
+  const [foods, setFoods] = useState([]);
+  const [selectedFoods, setSelectedFoods] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [user, setUser] = useState(null);
+  const [invoiceGenerated, setInvoiceGenerated] = useState(false);
+  const [invoiceId, setInvoiceId] = useState(null);
+  const [isSelectionSaved, setIsSelectionSaved] = useState(false); // Track if the selection is saved
 
-  // Fetch user and food data
   useEffect(() => {
-    // Fetching food items
+    // Fetch food items
     fetch("http://localhost:5000/api/food/list")
       .then((response) => response.json())
       .then((data) => setFoods(data.data))
       .catch((err) => console.error("Error fetching food items:", err));
 
-    const token = localStorage.getItem('token'); // Retrieve the token from storage
+    const token = localStorage.getItem('token');
 
     if (token) {
       fetch(`http://localhost:5000/api/users/admin/getuser/${userId}`, {
@@ -32,31 +33,27 @@ const UserFoodPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("User Data:", data);  // Log the API response
-          setUser(data);  // Set the user data
+          setUser(data);
         })
-        .catch((err) => {
-          console.error("Error fetching user data:", err);
-        });
+        .catch((err) => console.error("Error fetching user data:", err));
     } else {
       console.error("No token found");
     }
   }, [userId]);
 
-  // Add food to selected list
   const addFoodToUser = (food) => {
     setSelectedFoods((prev) => {
       const existingFoodIndex = prev.findIndex(f => f.foodId === food._id);
 
       if (existingFoodIndex > -1) {
-        return prev; // Food already in the list
+        return prev;
       }
 
       const updatedFoods = [
         ...prev,
         {
           foodId: food._id,
-          category: food.category,  // Ensure category is included
+          category: food.category,
           name: food.name,
           price: food.price,
           quantity: 1,
@@ -67,13 +64,11 @@ const UserFoodPage = () => {
     });
   };
 
-  // Update the total price
   const updateTotal = (foods) => {
     const total = foods.reduce((sum, food) => sum + food.price * food.quantity, 0);
     setTotal(total);
   };
 
-  // Increase food quantity
   const increaseQuantity = (foodId) => {
     setSelectedFoods((prev) => {
       const updatedFoods = prev.map((food) => {
@@ -87,22 +82,29 @@ const UserFoodPage = () => {
     });
   };
 
-  // Decrease food quantity
   const decreaseQuantity = (foodId) => {
     setSelectedFoods((prev) => {
-      const updatedFoods = prev.map((food) => {
-        if (food.foodId === foodId && food.quantity > 1) {
-          return { ...food, quantity: food.quantity - 1 };
-        }
-        return food;
-      });
+      const updatedFoods = prev
+        .map((food) => {
+          if (food.foodId === foodId && food.quantity > 0) {
+            return { ...food, quantity: food.quantity - 1 };
+          }
+          return food;
+        })
+        .filter((food) => food.quantity > 0); // Remove foods with quantity 0
+  
       updateTotal(updatedFoods);
       return updatedFoods;
     });
   };
 
-  // Generate invoice and save it to the backend
   const generateInvoice = () => {
+    // Check if selection has been saved before generating the invoice
+    if (!isSelectionSaved) {
+      toast.error("Please click 'Save Selection' first.");
+      return; // Stop the invoice generation process if the selection isn't saved
+    }
+
     const invoiceData = {
       userId: userId,
       foods: selectedFoods.map(food => ({
@@ -118,74 +120,101 @@ const UserFoodPage = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"), // Include auth-token
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify(invoiceData),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Invoice created:", data);
-        setInvoiceGenerated(true);  // Show the invoice once created
-        setInvoiceId(data.invoice._id);  // Save the invoiceId from the response
+        setInvoiceGenerated(true);
+        setInvoiceId(data.invoice._id);
       })
       .catch((err) => console.error("Error creating invoice:", err));
   };
 
-  return (
-    <div style={{ display: "flex" }}>
-      <Sidebar /> {/* Sidebar on the left */}
+  const saveSelection = () => {
+    fetch(`http://localhost:5000/api/users/${userId}/add-food`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ foods: selectedFoods }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        toast.success(data.message);
+        setIsSelectionSaved(true); // Mark the selection as saved
+      })
+      .catch((err) => console.error("Error saving selection:", err));
+  };
 
+  return (
+    <div className="user-food-page-wrapper">
+      <Sidebar /> {/* Sidebar on the left */}
       <div className="user-food-page">
         <div className="food-list">
-          <h3>All Foods</h3>
+          <h1 className="header">All Foods List</h1>
           <ul>
             {foods.map((food) => (
-              <li key={food._id}>
-                <button onClick={() => addFoodToUser(food)}>
-                  Add {food.name} - ${food.price}
-                </button>
+              <li key={food._id} className="food-item">
+                <div className="food-details">
+                  <span className="food-name">{food.name}</span>
+                </div>
+                <span className="food-price">${food.price}</span>
+                <button onClick={() => addFoodToUser(food)}>Add Food</button>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="selected-foods">
-          <h3>Selected Foods for User</h3>
+          <h1 className="header">Selected Foods for User</h1>
+          
+          {/* Display User's Details */}
+          {user && (
+            <div className="user-details">
+              <p><strong>Name:</strong> {user.name}</p>
+              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Contact:</strong> {user.contact}</p>
+              {/* Add more user details as needed */}
+            </div>
+          )}
+
           <ul>
             {selectedFoods.map((food) => (
               <li key={food.foodId}>
-                {food.name} - ${food.price}
-                <button onClick={() => decreaseQuantity(food.foodId)}>-</button>
-                {food.quantity}
-                <button onClick={() => increaseQuantity(food.foodId)}>+</button>
+                <div className="food-name-price">
+                  <span className="food-name">{food.name}</span>
+                  <span className="food-price">${food.price}</span>
+                </div>
+                <div className="quantity-controls">
+                  <button onClick={() => decreaseQuantity(food.foodId)}>-</button>
+                  <span className="food-quantity">{food.quantity}</span>
+                  <button onClick={() => increaseQuantity(food.foodId)}>+</button>
+                </div>
               </li>
             ))}
           </ul>
-          <h4>Total: ${total}</h4>
 
-          <button
-            onClick={() => {
-              fetch(`http://localhost:5000/api/users/${userId}/add-food`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ foods: selectedFoods }),
-              })
-                .then((response) => response.json())
-                .then((data) => alert(data.message))
-                .catch((err) => console.error("Error saving selection:", err));
-            }}
-          >
-            Save Selection
-          </button>
+          <h4 className="total-price">Total: ${total}</h4>
 
-          <button
-            onClick={generateInvoice}
-            style={{ marginTop: "20px" }}
-          >
-            Generate Invoice
-          </button>
+          <div className="actions">
+            <button
+              onClick={saveSelection}
+              className="action-button"
+              disabled={total === 0} // Disable Save Selection if total is 0
+            >
+              Save Selection
+            </button>
+
+            <button
+              onClick={generateInvoice}
+              className="action-button"
+              disabled={total === 0} // Disable Generate Invoice if total is 0
+            >
+              Generate Invoice
+            </button>
+          </div>
         </div>
       </div>
 

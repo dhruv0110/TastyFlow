@@ -42,4 +42,12 @@ router.get("/admin/getuser/:id", fetchUser ,getUserId);
 
 router.post('/:userId/add-food', addFoodToUser);
 
+router.post("/admin/create-user", [
+  body("name", "Enter a valid name").isLength({ min: 3 }),
+  body("email", "Enter a valid email").isEmail(),
+  body("password", "Enter a valid password").isLength({ min: 5 }),
+  body("contact", "Enter a valid contact number").optional().isLength({ min: 10 }),
+],
+  createUser); 
+
 module.exports = router;

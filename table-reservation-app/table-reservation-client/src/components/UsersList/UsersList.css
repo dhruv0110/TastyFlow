@@ -1,5 +1,4 @@
-/* src/components/UsersList/UsersList.css */
-
+/* Existing styles for the Users List */
 .users-list {
     width: 100%;
     max-width: 1225px;
@@ -74,35 +73,128 @@
     padding: 2rem;
 }
 
+.cursor {
+    text-decoration: none;
+}
+
+/* New Button to Add Customer */
+/* Dropdown Form for Adding New Customer */
+.add-customer-form {
+    display: block; /* Ensure form is rendered for the transition */
+    max-height: 0;  /* Start with 0 height */
+    opacity: 0;     /* Start with invisible form */
+    overflow: hidden; /* Hide overflow while transitioning */
+    transform: translateY(-20px); /* Start slightly above the normal position */
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out; /* Smooth transition */
+    margin-top: 20px;
+}
+
+.add-customer-form.show {
+    max-height: 500px; /* Set max-height to a value large enough to accommodate the form's height */
+    opacity: 1; /* Make form fully visible */
+    transform: translateY(0); /* Bring the form into place */
+}
+
+/* Add Customer Button */
+.add-customer-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.add-customer-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Form styles */
+.add-customer-form .form-group {
+    margin-bottom: 15px;
+}
+
+.add-customer-form .form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #9b9999;
+}
+
+.add-customer-form .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-customer-form .form-group button {
+    padding: 10px 20px;
+    background-color: #ff4135;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-customer-form .form-group button:hover {
+    background-color: #e03d2f;
+}
+
+/* Two-column form group for side-by-side fields */
+.add-customer-form .form-group.double {
+    display: flex;
+    gap: 20px;
+}
+
+.add-customer-form .form-group.double > div {
+    flex: 1;
+}
+
+/* Filter container styling */
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-container label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.filter-container input {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    width: 200px; /* Adjust width of input */
+    transition: border-color 0.3s ease;
+}
+
+.filter-container input:focus {
+    border-color: #ff4135; /* Highlight border color when focused */
+    outline: none;
+}
+
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
-    .users-table-format {
-        grid-template-columns: 1fr 2fr 1fr; /* Adjust columns for smaller screens */
-        gap: 8px;
-    }
-    .users-table-format.title {
-        display: none; /* Hide headers on very small screens */
-    }
-    .users-list {
-        padding: 1.5rem;
+    .add-customer-form .form-group.double {
+        flex-direction: column; /* Stack inputs vertically on smaller screens */
+        gap: 15px;
     }
 }
 
 @media (max-width: 600px) {
-    .users-table-format {
-        grid-template-columns: 1fr 2fr; /* Further adjust for very small screens */
-        gap: 6px;
-        padding: 10px 12px;
-    }
-    .users-table-format img {
-        width: 60px;
-        height: 45px;
-    }
-    .users-table-format.title {
-        display: none; /* Hide headers on very small screens */
-    }
-    .header {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
+    .add-customer-form .form-group.double {
+        flex-direction: column;
+        gap: 10px;
     }
 }
