@@ -64,7 +64,7 @@
   }
   
   /* Food Details Section */
-  .food-details {
+  .invoice-container .food-details {
     margin-top: 20px;
   }
   
@@ -108,8 +108,9 @@
   }
   
   .total-summary .grand-total h4 {
+    text-decoration: underline;
     font-size: 1.6rem;
-    color: #e74c3c;
+    color: black;
   }
   
   .total-summary p {

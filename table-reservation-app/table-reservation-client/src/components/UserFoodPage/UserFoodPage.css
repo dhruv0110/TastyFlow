@@ -1,108 +1,213 @@
 /* src/components/UserFoodPage/UserFoodPage.css */
 
+/* Global Container */
+.user-food-page-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: #121212;
+}
+
+/* Food Page Layout */
 .user-food-page {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1225px;
-    color: #fff; /* White text color for better readability */
-    font-size: 14px;
-    background-color: #1B1C1F; /* Dark background for the list container */
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
-    border-top: 1.5px solid #a9a9a9; /* Border to match List.css */
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.food-list, .selected-foods {
+  width: 48%;
+  background-color: #1F1F1F;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.food-list h3, .selected-foods h3 {
+  color: #FF6347;
+  margin-bottom: 20px;
+}
+
+/* Food List Styling */
+.food-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.food-item {
+  background-color: #333;
+  color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.food-item:hover {
+  transform: scale(1.05); /* Slight zoom-in effect */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+.food-item button {
+  background-color: #FF4135;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.food-item button:hover {
+  background-color: #e03d2f; /* Darker shade on hover */
+}
+
+.food-item .food-details {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.food-item .food-price {
+  margin-right: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.food-item .food-name {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.food-item .food-category {
+  font-size: 0.9rem;
+  color: #FF6347;
+}
+
+/* Additional Styling for Buttons and Actions */
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+/* Selected Foods List Styling */
+.selected-foods ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.header {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #ff4135; /* Accent color */
+  border-bottom: 2px solid #ff4135;
+  padding-bottom: 1rem;
+}
+
+.selected-foods li {
+  background-color: #333;
+  padding: 20px;
+  color: white;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.selected-foods .user-details p {
+  color: white;
+  font-size: 16px;
+}
+.selected-foods .user-details{
+  margin-bottom: 3rem;
+}
+.selected-foods li .food-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.selected-foods li .food-price {
+  margin-right: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.selected-foods li .quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-foods li .quantity-controls button {
+  background-color: #FF4135 ;
+  color: white;
+  border: none;
+  padding: 0px 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+}
+
+.selected-foods li .quantity-controls button:hover {
+  background-color: #e03d2f;
+}
+
+.selected-foods li .food-quantity {
+  font-size: 1.2rem;
+  margin: 0 10px;
+  width: 40px;
+  text-align: center;
+}
+
+.selected-foods li .food-name-price {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.total-price {
+  color: white;
+}
+.action-button {
+  background-color: #FF4135;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 48%;
+}
+
+.action-button:hover {
+  background-color: #e03d2f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-food-page-wrapper {
+    flex-direction: column;
   }
-  
+
   .food-list, .selected-foods {
-    width: 48%; /* Set the width of both sections to be nearly equal */
-    padding: 15px;
-    background-color: #333;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-bottom: 20px;
   }
-  
-  .food-list h3, .selected-foods h3 {
-    font-size: 1.5rem;
-    color: #ff4135; /* Accent color */
-    border-bottom: 2px solid #ff4135;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+
+  .food-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .food-list ul, .selected-foods ul {
-    list-style-type: none;
-    padding: 0;
+
+  .food-item button {
+    width: 100%;
   }
-  
-  .food-list li, .selected-foods li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #444;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 10px;
+
+  .food-item .food-price {
+    margin-top: 10px;
   }
-  
-  .food-list li button, .selected-foods li button {
-    background-color: #444;
-    color: #fff;
-    padding: 6px 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  
-  .selected-foods li {
-    font-size: 1.2rem;
-  }
-  
-  .selected-foods button {
-    margin: 0 5px;
-  }
-  
-  h4 {
-    margin-top: 15px;
-    font-size: 1.5rem;
-    color: #ff4135;
-  }
-  
-  .selected-foods button {
-    background-color: #ff4135;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 1.1rem;
-  }
-  
-  button:hover {
-    background-color: #ff6f61;
-  }
-  
-  /* Responsive design for smaller screens */
-  @media (max-width: 768px) {
-    .user-food-page {
-      flex-direction: column;
-      padding: 10px;
-    }
-  
-    .food-list, .selected-foods {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-  
-    .food-list li, .selected-foods li {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .food-list li button, .selected-foods li button {
-      width: 100%;
-    }
-  }
-  
+}
