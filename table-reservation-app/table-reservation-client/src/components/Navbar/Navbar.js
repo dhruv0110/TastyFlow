@@ -35,8 +35,8 @@ const Navbar = (props) => {
   useEffect(() => {
     const getUserDetails = async () => {
       const userData = await fetchUserDetails();
-     
-       // eslint-disable-next-line
+
+      // eslint-disable-next-line
       if (userData) {
         setUserDetails(userData); // Set userDetails to the fetched user's details
       } else {
@@ -60,7 +60,7 @@ const Navbar = (props) => {
   const handleAdminClick = () => {
     props.showAlert("Come to admin panel", "success");
   };
- 
+
 
   const updateUserDetailsFromLocalStorage = () => {
     const storedUserDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -135,7 +135,13 @@ const Navbar = (props) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" onClick={closeNavbar} to="./About">About</Link>
+                <Link
+                  className={`nav-link ${location.pathname === "/About" ? "active" : ""}`}
+                  to="./About"
+                  onClick={closeNavbar} // Close the navbar on click
+                >
+                  About
+                </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" onClick={closeNavbar}>Menu</Link>
@@ -168,7 +174,7 @@ const Navbar = (props) => {
                   }
                   <button className="btn logout-btn mx-2" onClick={logOut}>Logout</button>
                   <Link className="nav-link user-icon" to="/info" onClick={closeNavbar}>
-                  {getInitials(userDetails.name)}
+                    {getInitials(userDetails.name)}
                   </Link>
                 </>
               ) : (
