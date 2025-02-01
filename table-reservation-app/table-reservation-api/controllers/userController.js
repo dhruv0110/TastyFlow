@@ -3,7 +3,6 @@ const Food = require('../models/FoodModel');  // Import Food model
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fetchUser = require('../middleware/fetchUser');
 const nodemailer = require('nodemailer');
 
 const JWT_SECTRET = 'dhruvdhruvdhruv';
