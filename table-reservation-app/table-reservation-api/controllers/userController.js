@@ -267,8 +267,6 @@ const addFoodToUser = async (req, res) => {
 };
 
   
-  
-  
 
 module.exports = {
     createUser,

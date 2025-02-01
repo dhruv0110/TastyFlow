@@ -13,6 +13,7 @@ const UserFoodPage = () => {
   const [invoiceGenerated, setInvoiceGenerated] = useState(false);
   const [invoiceId, setInvoiceId] = useState(null);
   const [isSelectionSaved, setIsSelectionSaved] = useState(false); // Track if the selection is saved
+  const [isModalOpen, setIsModalOpen] = useState(false); // Control modal visibility
 
   useEffect(() => {
     // Fetch food items
@@ -127,6 +128,7 @@ const UserFoodPage = () => {
       .then((data) => {
         setInvoiceGenerated(true);
         setInvoiceId(data.invoice._id);
+        setIsModalOpen(true); // Open the modal after invoice is generated
       })
       .catch((err) => console.error("Error creating invoice:", err));
   };
@@ -147,6 +149,10 @@ const UserFoodPage = () => {
       .catch((err) => console.error("Error saving selection:", err));
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
+
   return (
     <div className="user-food-page-wrapper">
       <div className="user-food-page">
@@ -156,7 +162,7 @@ const UserFoodPage = () => {
             {foods.map((food) => (
               <li key={food._id} className="food-item">
                 <div className="food-details">
-                <img src={`http://localhost:5000/uploads/${food.image}`} alt={food.name} />
+                  <img src={`http://localhost:5000/uploads/${food.image}`} alt={food.name} />
                   <span className="food-name">{food.name}</span>
                 </div>
                 <span className="food-price">${food.price}</span>
@@ -183,7 +189,6 @@ const UserFoodPage = () => {
             {selectedFoods.map((food) => (
               <li key={food.foodId}>
                 <div className="food-name-price">
-                  
                   <span className="food-name">{food.name}</span>
                   <span className="food-price">${food.price}</span>
                 </div>
@@ -218,9 +223,16 @@ const UserFoodPage = () => {
         </div>
       </div>
 
-      {/* Render Invoice when generated */}
-      {invoiceGenerated && user && invoiceId && (
-        <Invoice invoiceId={invoiceId} user={user} />
+      {/* Render Invoice in Modal when generated */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+           
+            {invoiceGenerated && user && invoiceId && (
+              <Invoice invoiceId={invoiceId} user={user} />
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

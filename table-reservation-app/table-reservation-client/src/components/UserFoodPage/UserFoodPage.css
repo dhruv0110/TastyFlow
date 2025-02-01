@@ -1,9 +1,78 @@
-/* Global Container */
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it appears above other content */
+  backdrop-filter: blur(4px); /* Apply blur effect */
+  -webkit-backdrop-filter: blur(4px); /* For Safari */
+}
+
+
+/* Modal Content */
+.modal-content {
+  background-color: transparent;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto; /* Allow scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Close Button */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff4135;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.modal-close-button:hover {
+  background-color: #e03d2f;
+}
+
+/* Close button in the modal */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #FF4135;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.modal-close-button:hover {
+  background: #e03d2f;
+}
+
+/* Existing styles from your previous code */
 .user-food-page-wrapper {
   display: flex;
   justify-content: space-between;
   padding: 2rem;
-  
   background-color: #121212;
   flex-wrap: wrap; /* Allow wrapping of elements */
 }
@@ -27,6 +96,11 @@
   flex: 1;
   max-height: 77vh; /* Limit the height and make it scrollable */
   overflow-y: auto; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.food-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Selected Foods Styling */
@@ -38,6 +112,11 @@
   flex: 1;
   max-height: 77vh; /* Limit the height and make it scrollable */
   overflow-y: auto; /* Enable vertical scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.selected-foods::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .food-list h3, .selected-foods h3 {
