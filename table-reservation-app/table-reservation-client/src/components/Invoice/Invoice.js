@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Invoice.css"; // Import your invoice CSS styles
 import axios from "axios"; // Axios to make HTTP requests
+import { toast } from "react-toastify";
 
 const Invoice = ({ invoiceId, user }) => {
   const [invoice, setInvoice] = useState(null);
@@ -248,6 +249,19 @@ const Invoice = ({ invoiceId, user }) => {
   const finalAmount = (totalBeforeRoundOff + roundOffAmount).toFixed(2);
 
 
+  const sendInvoice = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/users/send-invoice/${invoiceId}`,
+        { userId: user._id }
+      );
+      toast.success('Invoice sent successfully!');
+    } catch (error) {
+      toast.error('Error sending invoice');
+      console.error(error);
+    }
+  };
+
   return (
     <div className="invoice-container">
       <div className="invoice-header">
@@ -310,32 +324,37 @@ const Invoice = ({ invoiceId, user }) => {
       <div className="total-summary">
         <div className="total">
           <div>Subtotal</div>
-          <div>{invoice.totalAmount}.00</div>
+          <div style={{marginRight:"9px"}}>{invoice.totalAmount}.00</div>
         </div>
         <div className="total">
           <div>CGST (2.5%)</div>
-          <div>{cgstAmount}</div>
+          <div style={{marginRight:"9px"}}>{cgstAmount}</div>
         </div>
         <div className="total">
           <div>SGST (2.5%)</div>
-          <div>{sgstAmount}</div>
+          <div style={{marginRight:"9px"}}>{sgstAmount}</div>
         </div>
       </div>
 
       <div className="total">
         <div>Round-off:</div>
-        <div>{roundOffAmount.toFixed(2)}</div>
+        <div style={{marginRight:"9px"}}>{roundOffAmount.toFixed(2)}</div>
       </div>
       <hr />
       <div className="final-total">
         <div>Total</div>
-        <div>{finalAmount}</div>
+        <div style={{marginRight:"9px"}}>{finalAmount}</div>
       </div>
       <hr />
 
-      <button className="print-invoice-btn" onClick={printInvoice}>
-        Print Invoice
-      </button>
+      <div className="button-container">
+  <button className="print-invoice-btn" onClick={printInvoice}>
+    Print Invoice
+  </button>
+  <button className="send-invoice-btn" onClick={sendInvoice}>
+    Send Invoice
+  </button>
+</div>
 
       <div className="invoice-footer">
         <p>Thank you for your business!</p>

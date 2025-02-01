@@ -1,10 +1,12 @@
 const User = require('../models/User');
 const Food = require('../models/FoodModel');  // Import Food model
+const Invoice = require('../models/Invoice');  // Import Invoice model
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-
+const fs = require('fs');
+const PDFDocument = require('pdfkit');
 const JWT_SECTRET = 'dhruvdhruvdhruv';
 
 // Create a User
@@ -266,6 +268,312 @@ const addFoodToUser = async (req, res) => {
     }
 };
 
+  // Send Invoice via email as a PDF
+  const sendInvoice = async (req, res) => {
+    try {
+      const { userId } = req.body;
+      const { invoiceId } = req.params;
+  
+      // Fetch the user and invoice details
+      const user = await User.findById(userId);
+      const invoice = await Invoice.findById(invoiceId);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      if (!invoice) {
+        return res.status(404).json({ message: 'Invoice not found' });
+      }
+  
+      // Calculate amounts
+      const subtotal = invoice.foods.reduce((acc, food) => acc + food.quantity * food.price, 0);
+      const cgstAmount = (subtotal * 0.025).toFixed(2);
+      const sgstAmount = (subtotal * 0.025).toFixed(2);
+      const totalBeforeRoundOff = subtotal + parseFloat(cgstAmount) + parseFloat(sgstAmount);
+      const roundOffAmount = Math.round(totalBeforeRoundOff) - totalBeforeRoundOff;
+      const finalAmount = (totalBeforeRoundOff + roundOffAmount).toFixed(2);
+  
+      // Create the email HTML content
+      const emailHTML = `
+      <html>
+  <head>
+    <title>Invoice - ${invoice.invoiceNumber}</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 20mm;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        line-height: 1.5;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+      .invoice-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 2px solid #f4f4f4;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      .company-info {
+      width: 40%;
+        flex: 1;
+        text-align: right;
+      }
+      .company-info h3 {
+        margin-bottom: 5px;
+        font-size: 18px;
+        color: #333;
+      }
+      .company-info p {
+        font-size: 12px;
+        color: #555;
+        margin: 5px 0;
+      }
+      .extra-info{
+        width: 15%;
+      }
+      .invoice-info {
+      width: 45%;
+        text-align: left;
+        flex: 1;
+      }
+      .invoice-info h4 {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+      }
+      .invoice-info p {
+        font-size: 12px;
+        color: #555;
+        margin: 5px 0;
+      }
+
+      .user-details {
+        margin: 20px 0;
+        border-top: 2px solid #f4f4f4;
+        padding-top: 10px;
+      }
+      .user-details h5 {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .food-details {
+        margin: 20px 0;
+      }
+      .food-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 14px;
+      }
+      .food-details th,
+      .food-details td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      .food-details th {
+        background-color: #f9f9f9;
+        color: #333;
+      }
+      .food-details td {
+        color: #555;
+      }
+      .total-summary {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #333;
+      }
+      .total-summary .total {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      .final-total {
+        display: flex;
+        
+        justify-content: space-between;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+        border-top: 2px solid #f4f4f4;
+        padding-top: 10px;
+      }
+        .final-total div {
+        width: 50%;
+        }
+      .invoice-footer {
+        text-align: center;
+        font-size: 14px;
+        color: #888;
+        margin-top: 30px;
+      }
+      .invoice-footer p {
+        margin: 5px 0;
+      }
+      /* New styles to align text */
+      .total-summary .total div {
+        width: 50%;
+      }
+      .total-summary .total div:first-child {
+        text-align: left;
+        font-weight: normal;
+      }
+      .total-summary .total div:last-child {
+        text-align: right;
+        font-weight: normal;
+      }
+      .final-total div {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="invoice-container">
+      <div class="invoice-header">
+      <!-- Invoice Information -->
+        <div class="invoice-info">
+          <h4>Invoice No. ${invoice.invoiceNumber}</h4>
+          <p><strong>Date:</strong> ${new Date(invoice.invoiceDate).toLocaleDateString()}</p>
+          <p><strong>Invoice ID:</strong> ${invoice._id}</p>
+        </div>
+            <div class="extra-info">
+            </div>
+        <!-- Company Information -->
+        <div class="company-info">
+          <h3 style= "margin-top:0">TastyFlow</h3>
+          <p>Shlok Infinity, 1st Floor, Sundersingh Bhandari Overbridge, Opposite Vishvakarma Temple</p>
+          <p>Phone: (909)991-49101</p>
+          <p>Email: tastyflow@gmail.com</p>
+        </div>
+
+        
+      </div>
+
+      <!-- User Details -->
+      <div class="user-details">
+        <h5>Bill To:</h5>
+        ${user ? ` 
+          <p><strong>Name:</strong> ${user.name}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Contact:</strong> ${user.contact}</p>
+          <p><strong>Id:</strong> ${user._id}</p>
+        ` : '<p>No user data available</p>'}
+      </div>
+
+      <!-- Items Purchased Table -->
+      <div class="food-details">
+        <h5>Items Purchased</h5>
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center;">SI no</th>
+              <th style="text-align: center;">Description</th>
+              <th style="text-align: center;">Quantity</th>
+              <th style="text-align: center;">Unit Price</th>
+              <th style="text-align: center;">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${invoice.foods.map((food, index) => `
+              <tr>
+                <td style="text-align: center;">${index + 1}</td>
+                <td>${food.name}</td>
+                <td style="text-align: center;">${food.quantity}</td>
+                <td style="text-align: center;">${(food.price).toFixed(2)}</td>
+                <td style="text-align: right;">${(food.quantity * food.price).toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Total and Summary -->
+      <div class="total-summary">
+        <div class="total">
+          <div>Subtotal</div>
+          <div style="text-align: right; margin-right : 9px;">${(invoice.totalAmount).toFixed(2)}</div>
+        </div>
+        <div class="total">
+          <div>CGST (2.5%)</div>
+          <div style="text-align: right; margin-right : 9px;">${(invoice.totalAmount * 0.025).toFixed(2)}</div>
+        </div>
+        <div class="total">
+          <div>SGST (2.5%)</div>
+          <div style="text-align: right; margin-right : 9px;">${(invoice.totalAmount * 0.025).toFixed(2)}</div>
+        </div>
+        <div class="total">
+          <div>Round-off</div>
+          <div style="text-align: right; margin-right : 9px;">$${roundOffAmount.toFixed(2)}</div>
+        </div>
+      </div>
+
+      <!-- Final Total -->
+      <div class="final-total">
+        <div>Total</div>
+        <div style="text-align: right; margin-right : 9px;">${finalAmount}</div>
+      </div>
+
+      <hr/>
+
+      <!-- Footer -->
+      <div class="invoice-footer">
+        <p>Thank you for your business!</p>
+        <p>TastyFlow - All Rights Reserved</p>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+
+      `;
+  
+      // Set up email options with HTML content
+      const mailOptions = {
+        from: 'dhruvsheth01102003@gmail.com',
+        pass: 'jhhozekydjsadaao',
+        to: user.email,
+        subject: `TastyFlow Invoice of ${user.name}`,
+        html: emailHTML,
+      };
+  
+      // Create the email transport
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'dhruvsheth01102003@gmail.com',
+          pass: 'jhhozekydjsadaao', // Use a secure app password
+        },
+      });
+  
+      // Send the email
+      await transporter.sendMail(mailOptions);
+  
+      res.status(200).json({ message: 'Invoice sent successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error sending invoice' });
+    }
+  };
   
 
 module.exports = {
@@ -277,5 +585,6 @@ module.exports = {
     resetPassword,
     getAllUsers,
     getUserId,
-    addFoodToUser
+    addFoodToUser,
+    sendInvoice,
 };

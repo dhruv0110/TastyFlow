@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
-const { createUser, loginUser, getUser, forgotPassword, verifyOtp, resetPassword, getAllUsers, getUserId, addFoodToUser } = require('../controllers/userController');
+const { createUser, loginUser, getUser, forgotPassword, verifyOtp, resetPassword, getAllUsers, getUserId, addFoodToUser, sendInvoice } = require('../controllers/userController');
 const fetchUser = require('../middleware/fetchUser');
 
 // Create a User
@@ -49,5 +49,7 @@ router.post("/admin/create-user", [
   body("contact", "Enter a valid contact number").optional().isLength({ min: 10 }),
 ],
   createUser); 
+
+  router.post('/send-invoice/:invoiceId', sendInvoice)
 
 module.exports = router;

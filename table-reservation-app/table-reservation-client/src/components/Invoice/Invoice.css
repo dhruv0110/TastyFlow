@@ -154,20 +154,40 @@ body {
   font-size: 1.5rem;
 }
 
-/* Print Button */
+/* Button container to align both buttons in one line */
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space between the buttons */
+  gap: 10px; /* Adds space between the buttons */
+  margin-top: 20px;
+}
+
+/* Print Invoice Button */
 .print-invoice-btn {
-  display: block;
-  width: 100%;
-  padding: 12px;
   background-color: #2980b9;
   color: white;
   font-size: 1.2rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
+  width: 48%; /* Make the buttons take up 48% of the width each */
+  padding: 12px;
   text-align: center;
 }
+
+/* Send Invoice Button */
+.send-invoice-btn {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 48%; /* Make the buttons take up 48% of the width each */
+  padding: 12px;
+  text-align: center;
+}
+
 
 /* Footer Section */
 .invoice-footer {
@@ -334,4 +354,3 @@ body {
     padding: 8px;
   }
 }
-
