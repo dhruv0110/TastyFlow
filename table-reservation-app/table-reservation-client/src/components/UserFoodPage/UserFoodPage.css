@@ -1,25 +1,43 @@
-/* src/components/UserFoodPage/UserFoodPage.css */
-
 /* Global Container */
 .user-food-page-wrapper {
   display: flex;
   justify-content: space-between;
   padding: 2rem;
+  
   background-color: #121212;
+  flex-wrap: wrap; /* Allow wrapping of elements */
 }
 
 /* Food Page Layout */
 .user-food-page {
+  height: 80vh;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow wrapping for small screens */
   width: 100%;
+  gap: 20px; /* Add gap between the two main sections */
 }
 
-.food-list, .selected-foods {
-  width: 48%;
+/* Food List Styling */
+.food-list {
+  width: 48%; /* Set width to 48% on larger screens */
   background-color: #1F1F1F;
   padding: 20px;
   border-radius: 10px;
+  flex: 1;
+  max-height: 77vh; /* Limit the height and make it scrollable */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Selected Foods Styling */
+.selected-foods {
+  width: 48%; /* Set width to 48% on larger screens */
+  background-color: #1F1F1F;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  max-height: 77vh; /* Limit the height and make it scrollable */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .food-list h3, .selected-foods h3 {
@@ -33,7 +51,7 @@
   padding: 0;
 }
 
-.food-item {
+.user-food-page .food-item {
   background-color: #333;
   color: #fff;
   border-radius: 8px;
@@ -43,6 +61,15 @@
   justify-content: space-between;
   align-items: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-wrap: wrap; /* Allow flex items to wrap */
+}
+
+.food-details img {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 10px;
 }
 
 .food-item:hover {
@@ -66,7 +93,6 @@
 
 .food-item .food-details {
   flex-grow: 1;
-  margin-right: 10px;
 }
 
 .food-item .food-price {
@@ -76,27 +102,12 @@
 }
 
 .food-item .food-name {
+  margin-left: 1rem;
   font-size: 1.1rem;
   margin-bottom: 8px;
 }
 
-.food-item .food-category {
-  font-size: 0.9rem;
-  color: #FF6347;
-}
-
-/* Additional Styling for Buttons and Actions */
-.actions {
-  display: flex;
-  justify-content: space-between;
-}
-/* Selected Foods List Styling */
-.selected-foods ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.header {
+.user-food-page .header {
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 2rem;
@@ -104,6 +115,20 @@
   color: #ff4135; /* Accent color */
   border-bottom: 2px solid #ff4135;
   padding-bottom: 1rem;
+}
+
+/* Additional Styling for Buttons and Actions */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* Add gap between buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap */
+}
+
+/* Selected Foods List Styling */
+.selected-foods ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 .selected-foods li {
@@ -122,9 +147,7 @@
   color: white;
   font-size: 16px;
 }
-.selected-foods .user-details{
-  margin-bottom: 3rem;
-}
+
 .selected-foods li .food-name {
   font-size: 1.2rem;
   font-weight: 500;
@@ -143,7 +166,7 @@
 }
 
 .selected-foods li .quantity-controls button {
-  background-color: #FF4135 ;
+  background-color: #FF4135;
   color: white;
   border: none;
   padding: 0px 28px;
@@ -173,6 +196,7 @@
 .total-price {
   color: white;
 }
+
 .action-button {
   background-color: #FF4135;
   color: white;
@@ -181,33 +205,140 @@
   border-radius: 8px;
   cursor: pointer;
   width: 48%;
+  text-align: center;
 }
 
 .action-button:hover {
   background-color: #e03d2f;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .user-food-page-wrapper {
-    flex-direction: column;
-  }
-
+/* Make sure everything is responsive on smaller screens */
+@media (max-width: 1024px) {
   .food-list, .selected-foods {
-    width: 100%;
+    width: 100%; /* Make sections full width on medium screens */
     margin-bottom: 20px;
   }
 
   .food-item {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column; /* Stack food item details vertically */
+    align-items: flex-start; /* Align the text to the start */
   }
 
   .food-item button {
-    width: 100%;
+    width: 100%; /* Make the buttons take full width */
+    margin-top: 10px;
   }
 
   .food-item .food-price {
     margin-top: 10px;
+  }
+
+  .food-item .food-name {
+    margin-bottom: 10px;
+  }
+
+  .actions {
+    flex-direction: column; /* Stack buttons vertically */
+    width: 100%; /* Make buttons full width */
+    gap: 10px;
+  }
+
+  .action-button {
+    width: 100%; /* Make action buttons take full width */
+  }
+
+  .selected-foods li {
+    flex-direction: column; /* Stack selected food items vertically */
+  }
+
+  .selected-foods .quantity-controls {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-food-page {
+    height: 100vh;
+    flex-direction: column; /* Stack the user-food page sections vertically */
+    gap: 20px; /* Add gap between the sections */
+  }
+
+  .food-list, .selected-foods {
+    width: 100%; /* Ensure full width for both sections */
+  }
+
+  .food-item {
+    flex-direction: column; /* Stack the food details vertically */
+    align-items: flex-start;
+  }
+
+  .food-item .food-price {
+    margin-top: 10px;
+  }
+
+  .food-item .food-details img {
+    width: 50px; /* Adjust the image size for smaller screens */
+    height: 30px;
+  }
+
+  .food-item button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .selected-foods .quantity-controls {
+    justify-content: space-between;
+    width: 100%; /* Adjust quantity controls layout */
+  }
+
+  .total-price {
+    margin-top: 20px;
+  }
+
+  .selected-foods li .food-name-price {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .selected-foods .user-details {
+    margin-bottom: 1rem; /* Reduce margin */
+  }
+
+  .selected-foods li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .selected-foods li .food-name-price {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .food-item .food-details img {
+    width: 40px; /* Further reduce image size for small screens */
+    height: 30px;
+  }
+
+  .food-item .food-price {
+    font-size: 1rem; /* Smaller font size for price */
+  }
+
+  .food-item .food-name {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .action-button {
+    font-size: 14px; /* Make action buttons smaller on mobile */
+  }
+
+  .selected-foods li .food-price,
+  .selected-foods li .food-name {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .selected-foods li .quantity-controls button {
+    padding: 0 20px;
   }
 }

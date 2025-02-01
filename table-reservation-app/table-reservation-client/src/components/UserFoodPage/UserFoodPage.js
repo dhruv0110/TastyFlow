@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "../../components/Sidebar/Sidebar"; // Sidebar component import
 import Invoice from "../Invoice/Invoice"; // Import the Invoice component
 import './UserFoodPage.css'; // Add your CSS styles
 import { toast } from "react-toastify";
@@ -150,7 +149,6 @@ const UserFoodPage = () => {
 
   return (
     <div className="user-food-page-wrapper">
-      <Sidebar /> {/* Sidebar on the left */}
       <div className="user-food-page">
         <div className="food-list">
           <h1 className="header">All Foods List</h1>
@@ -158,6 +156,7 @@ const UserFoodPage = () => {
             {foods.map((food) => (
               <li key={food._id} className="food-item">
                 <div className="food-details">
+                <img src={`http://localhost:5000/uploads/${food.image}`} alt={food.name} />
                   <span className="food-name">{food.name}</span>
                 </div>
                 <span className="food-price">${food.price}</span>
@@ -184,6 +183,7 @@ const UserFoodPage = () => {
             {selectedFoods.map((food) => (
               <li key={food.foodId}>
                 <div className="food-name-price">
+                  
                   <span className="food-name">{food.name}</span>
                   <span className="food-price">${food.price}</span>
                 </div>
