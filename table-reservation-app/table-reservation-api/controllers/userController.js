@@ -285,13 +285,6 @@ const addFoodToUser = async (req, res) => {
         return res.status(404).json({ message: 'Invoice not found' });
       }
   
-      // Calculate amounts
-      const subtotal = invoice.foods.reduce((acc, food) => acc + food.quantity * food.price, 0);
-      const cgstAmount = (subtotal * 0.025).toFixed(2);
-      const sgstAmount = (subtotal * 0.025).toFixed(2);
-      const totalBeforeRoundOff = subtotal + parseFloat(cgstAmount) + parseFloat(sgstAmount);
-      const roundOffAmount = Math.round(totalBeforeRoundOff) - totalBeforeRoundOff;
-      const finalAmount = (totalBeforeRoundOff + roundOffAmount).toFixed(2);
   
       // Create the email HTML content
       const emailHTML = `
@@ -509,27 +502,23 @@ const addFoodToUser = async (req, res) => {
       <!-- Total and Summary -->
       <div class="total-summary">
         <div class="total">
-          <div>Subtotal</div>
-          <div style="text-align: right; margin-right : 9px;">${(invoice.totalAmount).toFixed(2)}</div>
-        </div>
-        <div class="total">
           <div>CGST (2.5%)</div>
-          <div style="text-align: right; margin-right : 9px;">${(invoice.totalAmount * 0.025).toFixed(2)}</div>
+          <div style="text-align: right; margin-right : 9px;">${invoice.cgst.toFixed(2)}</div>
         </div>
         <div class="total">
           <div>SGST (2.5%)</div>
-          <div style="text-align: right; margin-right : 9px;">${(invoice.totalAmount * 0.025).toFixed(2)}</div>
+          <div style="text-align: right; margin-right : 9px;">${invoice.sgst.toFixed(2)}</div>
         </div>
         <div class="total">
           <div>Round-off</div>
-          <div style="text-align: right; margin-right : 9px;">$${roundOffAmount.toFixed(2)}</div>
+          <div style="text-align: right; margin-right : 9px;">${invoice.roundOff.toFixed(2)}</div>
         </div>
       </div>
 
       <!-- Final Total -->
       <div class="final-total">
         <div>Total</div>
-        <div style="text-align: right; margin-right : 9px;">${finalAmount}</div>
+        <div style="text-align: right; margin-right : 9px;">${invoice.totalAmount.toFixed(2)}</div>
       </div>
 
       <hr/>

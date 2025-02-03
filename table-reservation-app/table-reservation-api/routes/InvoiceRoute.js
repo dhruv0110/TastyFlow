@@ -8,7 +8,8 @@ const User = require("../models/User");
 // Create an invoice
 router.post("/create", async (req, res) => {
   try {
-    const { userId, foods, totalAmount } = req.body;
+    const { userId, foods, totalAmount, cgst, sgst, roundOff } = req.body;
+
 
     // Find the user by ID
     const user = await User.findById(userId);
@@ -33,6 +34,9 @@ router.post("/create", async (req, res) => {
       })),
       totalAmount,
       invoiceNumber, // Set the generated invoice number
+      cgst,
+      sgst,
+      roundOff
     });
 
     // Save the invoice to the database

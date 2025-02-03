@@ -104,32 +104,42 @@ const UserFoodPage = () => {
       toast.error("Please click 'Save Selection' first.");
       return; // Stop the invoice generation process if the selection isn't saved
     }
+    const cgstAmount = (total * 0.025);
+  const sgstAmount = (total * 0.025);
 
-    const invoiceData = {
-      userId: userId,
-      foods: selectedFoods.map(food => ({
-        foodId: food.foodId,
-        name: food.name,
-        price: food.price,
-        quantity: food.quantity,
-      })),
-      totalAmount: total,
-    };
+  // Round off logic
+  const totalBeforeRoundOff =
+  total + parseFloat(cgstAmount) + parseFloat(sgstAmount);
+  const roundOffAmount = Math.round(totalBeforeRoundOff) - totalBeforeRoundOff;
+  const finalAmount = (totalBeforeRoundOff + roundOffAmount).toFixed(2);
+  const invoiceData = {
+    userId: userId,
+    foods: selectedFoods.map(food => ({
+      foodId: food.foodId,
+      name: food.name,
+      price: food.price,
+      quantity: food.quantity,
+    })),
+    totalAmount: finalAmount,
+    cgst: cgstAmount,
+    sgst: sgstAmount,
+    roundOff: roundOffAmount
+  };
 
-    fetch("http://localhost:5000/api/invoice/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify(invoiceData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setInvoiceGenerated(true);
-        setInvoiceId(data.invoice._id);
-        setIsModalOpen(true); // Open the modal after invoice is generated
-      })
+  fetch("http://localhost:5000/api/invoice/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "auth-token": localStorage.getItem("token"),
+    },
+    body: JSON.stringify(invoiceData),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    setInvoiceGenerated(true);
+    setInvoiceId(data.invoice._id);
+    setIsModalOpen(true); // Open the modal after invoice is generated
+  })
       .catch((err) => console.error("Error creating invoice:", err));
   };
 
@@ -165,7 +175,7 @@ const UserFoodPage = () => {
                   <img src={`http://localhost:5000/uploads/${food.image}`} alt={food.name} />
                   <span className="food-name">{food.name}</span>
                 </div>
-                <span className="food-price">${food.price}</span>
+                <span className="food-price">{food.price.toFixed(2)}</span>
                 <button onClick={() => addFoodToUser(food)}>Add Food</button>
               </li>
             ))}
@@ -190,7 +200,7 @@ const UserFoodPage = () => {
               <li key={food.foodId}>
                 <div className="food-name-price">
                   <span className="food-name">{food.name}</span>
-                  <span className="food-price">${food.price}</span>
+                  <span className="food-price">{food.price.toFixed(2)}</span>
                 </div>
                 <div className="quantity-controls">
                   <button onClick={() => decreaseQuantity(food.foodId)}>-</button>
@@ -201,7 +211,7 @@ const UserFoodPage = () => {
             ))}
           </ul>
 
-          <h4 className="total-price">Total: ${total}</h4>
+          <h4 className="total-price">Total: {total.toFixed(2)}</h4>
 
           <div className="actions">
             <button
