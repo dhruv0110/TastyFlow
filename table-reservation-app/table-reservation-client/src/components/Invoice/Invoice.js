@@ -185,7 +185,7 @@ const Invoice = ({ invoiceId, user }) => {
                       <td>${food.name}</td>
                       <td>${food.quantity}</td>
                       <td>${food.price}</td>
-                      <td style="text-align: right;">$${(food.quantity * food.price).toFixed(2)}</td>
+                      <td style="text-align: right;">${(food.quantity * food.price).toFixed(2)}</td>
                     </tr>
                   `).join('')}
                 </tbody>
@@ -195,27 +195,23 @@ const Invoice = ({ invoiceId, user }) => {
             <!-- Total and Summary -->
             <div class="total-summary">
               <div class="total">
-                <div>Subtotal</div>
-                <div>$${invoice.totalAmount}</div>
-              </div>
-              <div class="total">
                 <div>CGST (2.5%)</div>
-                <div>$${(invoice.totalAmount * 0.025).toFixed(2)}</div>
+                <div>${invoice.cgst.toFixed(2)}</div>
               </div>
               <div class="total">
                 <div>SGST (2.5%)</div>
-                <div>$${(invoice.totalAmount * 0.025).toFixed(2)}</div>
+                <div>${invoice.sgst.toFixed(2)}</div>
               </div>
               <div class="total">
                 <div>Round-off:</div>
-                <div>$${roundOffAmount.toFixed(2)}</div>
+                <div>${invoice.roundOff.toFixed(2)}</div>
               </div>
             </div>
                     <hr/>
             <!-- Final Total -->
             <div class="final-total">
               <div>Total</div>
-              <div>$${finalAmount}</div>
+              <div>${invoice.totalAmount.toFixed(2)}</div>
             </div>
                     <hr/>
             <!-- Footer -->
@@ -237,16 +233,6 @@ const Invoice = ({ invoiceId, user }) => {
   if (loading) return <p>Loading invoice...</p>;
   if (error) return <p>{error}</p>;
 
-  // Calculate CGST and SGST amounts
-  const subtotal = invoice.foods.reduce((acc, food) => acc + food.quantity * food.price, 0);
-  const cgstAmount = (subtotal * 0.025).toFixed(2);
-  const sgstAmount = (subtotal * 0.025).toFixed(2);
-
-  // Round off logic
-  const totalBeforeRoundOff =
-    subtotal + parseFloat(cgstAmount) + parseFloat(sgstAmount);
-  const roundOffAmount = Math.round(totalBeforeRoundOff) - totalBeforeRoundOff;
-  const finalAmount = (totalBeforeRoundOff + roundOffAmount).toFixed(2);
 
 
   const sendInvoice = async () => {
@@ -312,7 +298,7 @@ const Invoice = ({ invoiceId, user }) => {
           <td style={{ textAlign: "center" }}>{food.quantity}</td>
           <td style={{ textAlign: "right" }}>{food.price}.00</td>
           <td style={{ textAlign: "right" }}>
-            ${(food.quantity * food.price).toFixed(2)}
+              {(food.quantity * food.price).toFixed(2)}
           </td>
         </tr>
       ))}
@@ -323,27 +309,23 @@ const Invoice = ({ invoiceId, user }) => {
 
       <div className="total-summary">
         <div className="total">
-          <div>Subtotal</div>
-          <div style={{marginRight:"9px"}}>{invoice.totalAmount}.00</div>
-        </div>
-        <div className="total">
           <div>CGST (2.5%)</div>
-          <div style={{marginRight:"9px"}}>{cgstAmount}</div>
+          <div style={{marginRight:"9px"}}>{invoice.cgst.toFixed(2)}</div>
         </div>
         <div className="total">
           <div>SGST (2.5%)</div>
-          <div style={{marginRight:"9px"}}>{sgstAmount}</div>
+          <div style={{marginRight:"9px"}}>{invoice.sgst.toFixed(2)}</div>
         </div>
       </div>
 
       <div className="total">
         <div>Round-off:</div>
-        <div style={{marginRight:"9px"}}>{roundOffAmount.toFixed(2)}</div>
+        <div style={{marginRight:"9px"}}>{invoice.roundOff.toFixed(2)}</div>
       </div>
       <hr />
       <div className="final-total">
         <div>Total</div>
-        <div style={{marginRight:"9px"}}>{finalAmount}</div>
+        <div style={{marginRight:"9px"}}>{invoice.totalAmount.toFixed(2)}</div>
       </div>
       <hr />
 

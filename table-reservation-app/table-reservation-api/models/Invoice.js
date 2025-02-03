@@ -15,6 +15,9 @@ const invoiceSchema = new mongoose.Schema(
     totalAmount: { type: Number, required: true },
     invoiceDate: { type: Date, default: Date.now },
     invoiceNumber: { type: Number, required: true }, // Add invoiceNumber field
+    cgst : {type: Number, required: true},
+    sgst : {type: Number, required: true},
+    roundOff : {type: Number, required: true}
   },
   { timestamps: true }
 );
