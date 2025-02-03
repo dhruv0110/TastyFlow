@@ -7,6 +7,7 @@ const Invoice = ({ invoiceId, user }) => {
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSending, setIsSending] = useState(false); // Track sending status
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -237,11 +238,12 @@ const Invoice = ({ invoiceId, user }) => {
 
   const sendInvoice = async () => {
     try {
+      setIsSending(true); // Set sending status to true
       const response = await axios.post(
         `http://localhost:5000/api/users/send-invoice/${invoiceId}`,
         { userId: user._id }
       );
-      toast.success('Invoice sent successfully!');
+      setIsSending(false); // Reset sending status after success
     } catch (error) {
       toast.error('Error sending invoice');
       console.error(error);
@@ -333,9 +335,13 @@ const Invoice = ({ invoiceId, user }) => {
   <button className="print-invoice-btn" onClick={printInvoice}>
     Print Invoice
   </button>
-  <button className="send-invoice-btn" onClick={sendInvoice}>
-    Send Invoice
-  </button>
+  <button
+          className="send-invoice-btn"
+          onClick={sendInvoice}
+          disabled={isSending} // Disable the button while sending
+        >
+          {isSending ? 'Sending...' : 'Send Invoice'}
+        </button>
 </div>
 
       <div className="invoice-footer">

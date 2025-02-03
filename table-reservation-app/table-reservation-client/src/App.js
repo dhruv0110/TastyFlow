@@ -23,6 +23,7 @@ import SlotTable from './components/TableShow/SlotTable';
 import UsersList from './components/UsersList/UsersList';
 import UserFoodPage from './components/UserFoodPage/UserFoodPage';
 import Invoices from './components/Invoice/Invoice';
+import UserDashBoard from './components/UserDashboard/UserDashboard'
 
 
 
@@ -110,6 +111,8 @@ function App() {
         <Route path="/admin/create-bill" element={<AdminRoute element={<UsersList showAlert={showAlert} />} />} />
         <Route path="/user/:userId/create-bill" element={<AdminRoute element={<UserFoodPage showAlert={showAlert} />} />} />
         <Route path="/invoice" element={<AdminRoute element={<Invoices showAlert={showAlert} />} />} />
+        <Route path="/user/dash-board/:userId" element={<AdminRoute element={<UserDashBoard showAlert={showAlert} />} />} />
+        
         <Route path="*" element={<Navigate to="/" />} />
 
         {/* About Path */}
