@@ -46,8 +46,7 @@ console.log('User ID:', userId);  // This will help you verify the userId
       <div className="user-dash">
         <form className="user-dash-form flex-col">
           <h1 className="header">{userName.name}</h1>
-          
-            <button onClick={handleReviewsClick}>reviews</button>
+            <button className='review-btn' onClick={handleReviewsClick}>Reviews </button>
         </form>
       </div>
     </div>

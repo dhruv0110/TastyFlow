@@ -30,8 +30,13 @@ const Sidebar = ({showAlert}) => {
             <p>Reviews</p>
         </NavLink>
         <NavLink to='/admin/create-bill' className="sidebar-option">
-        <i className="fa-solid fa-file-invoice" style={{fontSize:"1.3rem"}}></i>
+        <i className="fa-solid fa-money-bill" style={{fontSize:"1.3rem"}}></i>
+        
             <p>Create Bill</p>
+        </NavLink>
+        <NavLink to='/admin/all-invoices' className="sidebar-option">
+        <i className="fa-solid fa-file-invoice" style={{fontSize:"1.3rem"}}></i>
+            <p>Invoices</p>
         </NavLink>
       </div>
     </div>

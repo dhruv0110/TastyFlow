@@ -23,7 +23,10 @@ import SlotTable from './components/TableShow/SlotTable';
 import UsersList from './components/UsersList/UsersList';
 import UserFoodPage from './components/UserFoodPage/UserFoodPage';
 import Invoices from './components/Invoice/Invoice';
-import UserDashBoard from './components/UserDashboard/UserDashboard'
+import UserDashBoard from './components/UserDashboard/UserDashboard';
+import InvoiceList from './components/InvoiceList/InvoiceList';
+import InvoiceDetail from './components/UserInvoiceList/UserInvoiceList';
+import EditInvoice from './components/EditInvoice/EditInvoice';
 
 
 
@@ -110,8 +113,12 @@ function App() {
         <Route path="/admin/slot/:slotNumber" element={<AdminRoute element={<SlotTable showAlert={showAlert} />} />} />
         <Route path="/admin/create-bill" element={<AdminRoute element={<UsersList showAlert={showAlert} />} />} />
         <Route path="/user/:userId/create-bill" element={<AdminRoute element={<UserFoodPage showAlert={showAlert} />} />} />
-        <Route path="/invoice" element={<AdminRoute element={<Invoices showAlert={showAlert} />} />} />
+        <Route path="/admin/invoice" element={<AdminRoute element={<Invoices showAlert={showAlert} />} />} />
         <Route path="/user/dash-board/:userId" element={<AdminRoute element={<UserDashBoard showAlert={showAlert} />} />} />
+        <Route path="/admin/all-invoices" element={<AdminRoute element={<InvoiceList showAlert={showAlert} />} />} />
+        <Route path="/admin/invoices/:invoiceId" element={<AdminRoute element={<InvoiceDetail showAlert={showAlert} />} />} />
+        <Route path="/admin/invoices/edit/:invoiceId" element={<AdminRoute element={<EditInvoice showAlert={showAlert} />} />} />
+        
         
         <Route path="*" element={<Navigate to="/" />} />
 

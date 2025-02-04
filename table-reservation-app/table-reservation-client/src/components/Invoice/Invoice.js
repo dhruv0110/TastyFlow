@@ -13,7 +13,7 @@ const Invoice = ({ invoiceId, user }) => {
     const fetchInvoice = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/invoice/${invoiceId}`
+          `http://localhost:5000/api/invoice/admin/${invoiceId}`
         );
         setInvoice(response.data);
         setLoading(false);

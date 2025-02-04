@@ -52,8 +52,27 @@ router.post("/create", async (req, res) => {
   }
 });
 
+// Get all invoices
+router.get("/admin/all-invoice", async (req, res) => {
+  try {
+    const invoices = await Invoice.find()
+      .populate("userId") // Populate the user details
+      .populate("foods.foodId"); // Populate food details
+
+    if (!invoices || invoices.length === 0) {
+      return res.status(404).json({ message: "No invoices found" });
+    }
+
+    res.json(invoices);
+  } catch (err) {
+    console.error("Error fetching invoices:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 // Get an invoice by ID
-router.get("/:invoiceId", async (req, res) => {
+router.get("/admin/:invoiceId", async (req, res) => {
   try {
     const invoice = await Invoice.findById(req.params.invoiceId)
       .populate("userId") // Populate the user details
@@ -69,5 +88,45 @@ router.get("/:invoiceId", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+
+// Edit an invoice by ID
+router.put("/admin/update/:invoiceId", async (req, res) => {
+  try {
+    const { invoiceId } = req.params;
+    const { totalAmount, cgst, sgst, roundOff, foods } = req.body;
+
+    // Find the invoice by ID
+    const invoice = await Invoice.findById(invoiceId);
+
+    if (!invoice) {
+      return res.status(404).json({ message: "Invoice not found" });
+    }
+
+    // Ensure each food item has a valid foodId
+    const updatedFoods = foods.map(food => {
+      if (!food.foodId) {
+        return res.status(400).json({ message: "FoodId is missing for some food items" });
+      }
+      return food;
+    });
+
+    // Update the invoice fields
+    invoice.totalAmount = totalAmount;
+    invoice.cgst = cgst;
+    invoice.sgst = sgst;
+    invoice.roundOff = roundOff;
+    invoice.foods = updatedFoods;
+
+    // Save the updated invoice
+    await invoice.save();
+
+    res.status(200).json({ message: "Invoice updated successfully", invoice });
+  } catch (error) {
+    console.error('Error updating invoice:', error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 module.exports = router;

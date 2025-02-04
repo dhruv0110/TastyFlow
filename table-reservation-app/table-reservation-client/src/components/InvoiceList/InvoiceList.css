@@ -1,4 +1,4 @@
-.user-dash {
+.invoice-list {
     width: 100%;
     max-width: 1225px;
     color: #fff; /* White text color for better readability */
@@ -10,7 +10,7 @@
     margin: 0 auto;
 }
 
-.user-dash .header {
+.invoice-list .header {
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 2rem;
@@ -19,17 +19,3 @@
     border-bottom: 2px solid #ff4135;
     padding-bottom: 1rem;
   }
-
-  .review-btn {
-    width: 100%;
-    max-width: 150px;
-    padding: 12px;
-    border: none;
-    background-color: #ff4135;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    align-self: flex-end;
-}
