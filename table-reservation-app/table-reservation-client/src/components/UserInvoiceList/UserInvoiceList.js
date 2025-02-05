@@ -28,10 +28,6 @@ const InvoiceDetail = () => {
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div className="invoice-detail">
-        {/* Dynamically set the header */}
-        <h1 className="header">
-          {loading ? "Loading..." : `${invoice.userId?.name}'s Invoice`}
-        </h1>
 
         {loading ? (
           <p>Loading invoice details...</p>
