@@ -1,5 +1,5 @@
 /* Container for the whole section */
-.food-item {
+.main-food-div .food-item {
     width: 100%;
     margin: auto;
     border-radius: 30px;
