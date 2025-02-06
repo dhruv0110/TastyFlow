@@ -213,7 +213,7 @@ const UsersList = () => {
                 <p>{user.name}</p>
                 <p>{user.email}</p>
                 <p>{user.role}</p>
-                <Link to={`/user/${user._id}/create-bill`} className="cursor">
+                <Link to={`/admin/user/${user._id}/create-bill`} className="cursor">
                   Create Bill
                 </Link>
               </div>

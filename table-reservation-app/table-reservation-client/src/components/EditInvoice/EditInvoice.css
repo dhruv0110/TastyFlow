@@ -63,13 +63,13 @@
   color: #ff9f00; /* Yellow accent color */
 }
 
-.tax-details {
+.edit-invoice-container .tax-details {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.tax-item {
+.edit-invoice-container .tax-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -180,29 +180,60 @@
   background-color: #e68900;
 }
 
-/* Table Styling */
-.food-items-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.food-items-table th,
-.food-items-table td {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #555;
-  color: white;
-}
-
-.food-items-table th {
+.edit-invoice-detail .invoice-table-format {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border: 1px solid #333;
+  border-radius: 8px;
   background-color: #333;
-  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
 }
 
-.food-items-table tr:nth-child(even) {
-  background-color: #4444444d;
+
+
+
+
+
+
+.edit-invoice-detail .invoice-table {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 1rem;
 }
+
+
+.edit-invoice-detail .invoice-table-format:hover {
+  background-color: #444;
+  transform: scale(1.02);
+}
+
+.edit-invoice-detail .invoice-table-format b {
+  font-weight: 600;
+  color: #ff4135;
+}
+
+.edit-invoice-detail .invoice-table-format p {
+  margin: 0;
+  color: #fff;
+}
+
+
+.invoice-table-format .cursor:hover {
+  color: #ff6f61;
+}
+
+
+
+
+
+
+
 
 
 /* Input field inside the table */

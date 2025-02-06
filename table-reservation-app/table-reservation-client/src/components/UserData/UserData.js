@@ -57,7 +57,7 @@ const UserData = () => {
                 </div>
                 <button
                   className="info-button"
-                  onClick={() => navigate(`/user/dash-board/${user._id}`)}
+                  onClick={() => navigate(`/admin/user/dash-board/${user._id}`)}
                 >
                   <i className="fa-solid fa-circle-info"></i>
                 </button>

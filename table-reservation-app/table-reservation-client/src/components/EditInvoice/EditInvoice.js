@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import axios from 'axios';
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 import './EditInvoice.css';
 
 const EditInvoice = () => {
@@ -106,17 +106,17 @@ const EditInvoice = () => {
 
   const handleAddFoodItem = (foodId) => {
     const selectedFoodItem = foodsList.find((food) => food._id === foodId);
-  
+
     if (selectedFoodItem) {
       // Check if the food item is already in the foods list of the invoice
       const isFoodAlreadyAdded = invoice.foods.some((food) => food.foodId === selectedFoodItem._id);
-    
+
       if (isFoodAlreadyAdded) {
         // Show a message instead of re-adding the same food
         alert("This food item is already added to the invoice.");
         return; // Prevent adding the same item again
       }
-    
+
       const newFoodItem = {
         foodId: selectedFoodItem._id,  // this should correspond to the foodId you are using for food items
         name: selectedFoodItem.name,
@@ -124,13 +124,13 @@ const EditInvoice = () => {
         quantity: 1,
         total: selectedFoodItem.price,
       };
-    
+
       // Add the new food item to the foods list in the invoice
       const updatedFoods = [...invoice.foods, newFoodItem];
-    
+
       // Recalculate the totals after adding the new food item
       const { totalAmount, cgst, sgst, roundOffAmount, finalAmount } = calculateTotalAmount(updatedFoods);
-    
+
       // Update the invoice state with the new food item and the updated totals
       setInvoice({
         ...invoice,
@@ -141,16 +141,16 @@ const EditInvoice = () => {
         roundOffAmount,
         finalAmount,
       });
-    
+
       // Reset the selected food dropdown value to default
       setSelectedFood('');
     }
   };
-  
-  
-  
-  
-  
+
+
+
+
+
 
   const handleRemoveFoodItem = (index) => {
     const updatedFoods = [...invoice.foods];
@@ -171,7 +171,7 @@ const EditInvoice = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const updatedFoods = invoice.foods.map((food) => ({
       foodId: food.foodId,
       name: food.name,
@@ -179,7 +179,7 @@ const EditInvoice = () => {
       quantity: parseInt(food.quantity) || 1,
       total: parseFloat(food.total) || 0,
     }));
-  
+
     const invoiceDataToStore = {
       ...invoice,
       foods: updatedFoods,
@@ -190,10 +190,10 @@ const EditInvoice = () => {
       finalAmount: invoice.finalAmount,
       invoiceDate: invoice.invoiceDate,
     };
-  
+
     try {
       const response = await axios.put(`http://localhost:5000/api/invoice/admin/update/${invoiceId}`, invoiceDataToStore);
-  
+
       if (response.data.message === 'Invoice updated successfully') {
         navigate("/admin/all-invoices");
       } else {
@@ -247,43 +247,37 @@ const EditInvoice = () => {
           </div>
 
           <h4>Food Items:</h4>
-          <div className="food-item-container">
-            <table className="food-items-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoice.foods.map((food, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{food.name}</td>
-                    <td>{food.price.toFixed(2)}</td>
-                    <td>
-                      <input
-                        type="number"
-                        name="quantity"
-                        value={food.quantity}
-                        onChange={(e) => handleFoodChange(index, e)}
-                        className="quantity-input"
-                      />
-                    </td>
-                    <td>{food.total.toFixed(2)}</td>
-                    <td>
-                      <button type="button" onClick={() => handleRemoveFoodItem(index)} className="remove-btn">
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="invoice-table">
+            <div className="invoice-table-format title">
+              <b>#</b>
+              <b>Name</b>
+              <b>Price</b>
+              <b>Quantity</b>
+              <b>Total</b>
+              <b>Action</b>
+            </div>
+            {invoice.foods.length > 0 ? (
+              invoice.foods.map((food, index) => (
+                <div key={index} className="invoice-table-format">
+                  <p>{index + 1}</p>
+                  <p>{food.name}</p>
+                  <p>{food.price.toFixed(2)}</p>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={food.quantity}
+                    onChange={(e) => handleFoodChange(index, e)}
+                    className="quantity-input"
+                  />
+                  <p>{food.total.toFixed(2)}</p>
+                  <button type="button" onClick={() => handleRemoveFoodItem(index)} className="remove-btn">
+                    Remove
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No food items available</p>
+            )}
           </div>
 
           <div className="form-section">

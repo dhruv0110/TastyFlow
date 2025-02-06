@@ -1,4 +1,4 @@
-.invoice-detail {
+.user-invoice {
     width: 100%;
     max-width: 1225px;
     color: #fff; /* White text color for better readability */
@@ -10,7 +10,7 @@
     margin: 0 auto;
 }
 
-.invoice-detail .header {
+.user-invoice .header {
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 2rem;
@@ -20,29 +20,21 @@
     padding-bottom: 1rem;
   }
 
-  .invoice-name {
+  .user-invoice .user-name {
     text-align: center; /* Center user name */
     font-size: 24px; /* Larger font size for emphasis */
     margin-bottom: 20px; /* Space below the name */
   }
 
-  .invoice-detail .tax-details {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .invoice-detail .tax-item {
+  .invoice-table {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 20%; /* Make it responsive for 4 columns */
-    margin-bottom: 1rem;
-  }
+    gap: 15px;
+}
 
-  .invoice-detail  .invoice-table-format {
+.invoice-table-format{
     display: grid;
-    grid-template-columns: 2fr 3fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
     align-items: center;
     gap: 10px;
     padding: 12px 15px;
@@ -52,11 +44,44 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
-  }
+}
 
-  .user-invoice-form{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 1rem;
+.invoice-table-format:hover {
+    background-color: #444;
+    transform: scale(1.02);
+}
+
+.invoice-table-format b {
+    font-weight: 600;
+    color: #ff4135;
+}
+
+.invoice-table-format p {
+    margin: 0;
+    color: #fff;
+}
+.view-button,
+.edit-button {
+    padding: 8px 15px;
+    color: #5c4401b6;
+    background-color: #ff9f00; /* Accent color */
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+    display: inline-block;
+    width: 50%;
+}
+
+.view-button:hover,
+.edit-button:hover {
+    background-color: #da8702; /* Darker shade for hover effect */
+}
+
+
+  /* No Reviews Message Styling */
+ .user-invoice .no-reviews {
+    text-align: center; /* Center text */
+    font-style: italic; /* Italicize message */
   }

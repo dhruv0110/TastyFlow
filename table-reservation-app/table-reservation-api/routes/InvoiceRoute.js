@@ -128,5 +128,28 @@ router.put("/admin/update/:invoiceId", async (req, res) => {
   }
 });
 
+// Get all invoices by userId
+router.get("/admin/invoices/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Find invoices by userId
+    const invoices = await Invoice.find({ userId })
+      .populate("userId") // Populate the user details
+      .populate("foods.foodId"); // Populate food details
+
+    if (!invoices || invoices.length === 0) {
+      return res.status(404).json({ message: "No invoices found for this user" });
+    }
+
+    res.json(invoices);
+  } catch (err) {
+    console.error("Error fetching invoices by userId:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
 
 module.exports = router;

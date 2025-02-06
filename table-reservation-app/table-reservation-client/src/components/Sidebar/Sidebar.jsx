@@ -12,7 +12,7 @@ const Sidebar = ({showAlert}) => {
             <p>Add Items</p>
         </NavLink>
 
-        <NavLink to='/list' className="sidebar-option">
+        <NavLink to='/admin/list' className="sidebar-option">
         <i className="fa-solid fa-list-check" style={{fontSize:"1.3rem"}}></i>
             <p>List Items</p>
         </NavLink>
