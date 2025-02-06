@@ -94,7 +94,7 @@ router.get("/admin/:invoiceId", async (req, res) => {
 router.put("/admin/update/:invoiceId", async (req, res) => {
   try {
     const { invoiceId } = req.params;
-    const { totalAmount, cgst, sgst, roundOff, foods } = req.body;
+    const { totalAmount, cgst, sgst, roundOffAmount, foods } = req.body;
 
     // Find the invoice by ID
     const invoice = await Invoice.findById(invoiceId);
@@ -115,7 +115,7 @@ router.put("/admin/update/:invoiceId", async (req, res) => {
     invoice.totalAmount = totalAmount;
     invoice.cgst = cgst;
     invoice.sgst = sgst;
-    invoice.roundOff = roundOff;
+    invoice.roundOff = roundOffAmount;
     invoice.foods = updatedFoods;
 
     // Save the updated invoice

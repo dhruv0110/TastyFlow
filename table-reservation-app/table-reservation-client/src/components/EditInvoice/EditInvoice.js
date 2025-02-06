@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import axios from 'axios';
+import {toast} from "react-toastify"
 import './EditInvoice.css';
 
 const EditInvoice = () => {
@@ -19,6 +20,7 @@ const EditInvoice = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [foodsList, setFoodsList] = useState([]);
+  const [selectedFood, setSelectedFood] = useState('');  // State to manage selected food
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -103,23 +105,32 @@ const EditInvoice = () => {
   };
 
   const handleAddFoodItem = (foodId) => {
-    const selectedFood = foodsList.find((food) => food._id === foodId);
+    const selectedFoodItem = foodsList.find((food) => food._id === foodId);
   
-    if (selectedFood) {
+    if (selectedFoodItem) {
+      // Check if the food item is already in the foods list of the invoice
+      const isFoodAlreadyAdded = invoice.foods.some((food) => food.foodId === selectedFoodItem._id);
+    
+      if (isFoodAlreadyAdded) {
+        // Show a message instead of re-adding the same food
+        alert("This food item is already added to the invoice.");
+        return; // Prevent adding the same item again
+      }
+    
       const newFoodItem = {
-        foodId: selectedFood._id,
-        name: selectedFood.name,
-        price: selectedFood.price,
+        foodId: selectedFoodItem._id,  // this should correspond to the foodId you are using for food items
+        name: selectedFoodItem.name,
+        price: selectedFoodItem.price,
         quantity: 1,
-        total: selectedFood.price,
+        total: selectedFoodItem.price,
       };
-  
-      // Add the new food item to the invoice
+    
+      // Add the new food item to the foods list in the invoice
       const updatedFoods = [...invoice.foods, newFoodItem];
-  
+    
       // Recalculate the totals after adding the new food item
       const { totalAmount, cgst, sgst, roundOffAmount, finalAmount } = calculateTotalAmount(updatedFoods);
-  
+    
       // Update the invoice state with the new food item and the updated totals
       setInvoice({
         ...invoice,
@@ -130,8 +141,15 @@ const EditInvoice = () => {
         roundOffAmount,
         finalAmount,
       });
+    
+      // Reset the selected food dropdown value to default
+      setSelectedFood('');
     }
   };
+  
+  
+  
+  
   
 
   const handleRemoveFoodItem = (index) => {
@@ -153,7 +171,7 @@ const EditInvoice = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const updatedFoods = invoice.foods.map((food) => ({
       foodId: food.foodId,
       name: food.name,
@@ -161,7 +179,7 @@ const EditInvoice = () => {
       quantity: parseInt(food.quantity) || 1,
       total: parseFloat(food.total) || 0,
     }));
-
+  
     const invoiceDataToStore = {
       ...invoice,
       foods: updatedFoods,
@@ -172,10 +190,10 @@ const EditInvoice = () => {
       finalAmount: invoice.finalAmount,
       invoiceDate: invoice.invoiceDate,
     };
-
+  
     try {
       const response = await axios.put(`http://localhost:5000/api/invoice/admin/update/${invoiceId}`, invoiceDataToStore);
-
+  
       if (response.data.message === 'Invoice updated successfully') {
         navigate("/admin/all-invoices");
       } else {
@@ -186,6 +204,12 @@ const EditInvoice = () => {
       setError('Failed to update invoice');
     }
   };
+
+  useEffect(() => {
+    if (selectedFood) {
+      handleAddFoodItem(selectedFood); // Automatically add food item when selected
+    }
+  }, [selectedFood]);
 
   if (loading) return <p>Loading invoice...</p>;
 
@@ -201,62 +225,74 @@ const EditInvoice = () => {
           </div>
 
           <div className="tax-details">
-  <div className="tax-item">
-    <label>Total Amount (Including Taxes):</label>
-    <p>{invoice.finalAmount ? invoice.finalAmount : invoice.totalAmount}</p>
-  </div>
+            <div className="tax-item">
+              <label>Total Amount (Including Taxes):</label>
+              <p>{invoice.finalAmount ? invoice.finalAmount : invoice.totalAmount}</p>
+            </div>
 
-  <div className="tax-item">
-    <label>CGST:</label>
-    <p>{invoice.cgst}</p>
-  </div>
+            <div className="tax-item">
+              <label>CGST:</label>
+              <p>{invoice.cgst}</p>
+            </div>
 
-  <div className="tax-item">
-    <label>SGST:</label>
-    <p>{invoice.sgst}</p>
-  </div>
+            <div className="tax-item">
+              <label>SGST:</label>
+              <p>{invoice.sgst}</p>
+            </div>
 
-  <div className="tax-item">
-    <label>Round Off:</label>
-    <p>{invoice.roundOffAmount? invoice.roundOffAmount : invoice.roundOff}</p>
-  </div>
-</div>
-
+            <div className="tax-item">
+              <label>Round Off:</label>
+              <p>{invoice.roundOffAmount}</p>
+            </div>
+          </div>
 
           <h4>Food Items:</h4>
           <div className="food-item-container">
-            {invoice.foods.map((food, index) => (
-              <div className="food-item" key={index}>
-                <div className="food-details">
-                <p className='index_num'>{index + 1}.</p>
-                  <div>
-                    <p>{food.name}</p>
-                  </div>
-                  <div>
-                    <p>{food.price.toFixed(2)}</p>
-                  </div>
-                  <div>
-                    <input
-                      type="number"
-                      name="quantity"
-                      value={food.quantity}
-                      onChange={(e) => handleFoodChange(index, e)}
-                    />
-                  </div>
-                  <div>
-                    <p>{food.total.toFixed(2)}</p>
-                  </div>
-                  <button type="button" onClick={() => handleRemoveFoodItem(index)} className="remove-btn">
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))}
+            <table className="food-items-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoice.foods.map((food, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{food.name}</td>
+                    <td>{food.price.toFixed(2)}</td>
+                    <td>
+                      <input
+                        type="number"
+                        name="quantity"
+                        value={food.quantity}
+                        onChange={(e) => handleFoodChange(index, e)}
+                        className="quantity-input"
+                      />
+                    </td>
+                    <td>{food.total.toFixed(2)}</td>
+                    <td>
+                      <button type="button" onClick={() => handleRemoveFoodItem(index)} className="remove-btn">
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="form-section">
             <label>Select Food Item:</label>
-            <select onChange={(e) => handleAddFoodItem(e.target.value)} className="food-dropdown">
+            <select
+              value={selectedFood}  // Bind to state for controlled component
+              onChange={(e) => setSelectedFood(e.target.value)}  // Update selectedFood state on change
+              className="food-dropdown"
+            >
               <option value="">Select a food item</option>
               {foodsList.map((food) => (
                 <option key={food._id} value={food._id}>
