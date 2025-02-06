@@ -27,6 +27,7 @@ import UserDashBoard from './components/UserDashboard/UserDashboard';
 import InvoiceList from './components/InvoiceList/InvoiceList';
 import InvoiceDetail from './components/UserInvoiceList/UserInvoiceList';
 import EditInvoice from './components/EditInvoice/EditInvoice';
+import UserInvoice from "./components/UserInvoice/UserInvoice"
 
 
 
@@ -102,23 +103,22 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword showAlert={showAlert} />} />
         <Route path="/table-reserve" element={localStorage.getItem("token") ? <TableComponent showAlert={showAlert} /> : <Navigate to="/login" />} />
         <Route path="/admin" element={<AdminRoute element={<Admin showAlert={showAlert} />} />} />
-        {/* <Route path="/admin/slot1" element={<AdminRoute element={<Slot1Table showAlert={showAlert} />} />} /> */}
-        {/* <Route path="/admin/slot2" element={<AdminRoute element={<Slot2Table showAlert={showAlert} />} />} /> */}
-        <Route path="/list" element={<AdminRoute element={<List showAlert={showAlert} />} />} />
+        <Route path="/admin/list" element={<AdminRoute element={<List showAlert={showAlert} />} />} />
         <Route path="/admin/add" element={<AdminRoute element={<Add showAlert={showAlert} />} />} />
         <Route path="/admin/all-users" element={<AdminRoute element={<UserData showAlert={showAlert} />} />} />
         <Route path="/admin/all-reviews" element={<AdminRoute element={<Reviews showAlert={showAlert} />} />} />
-        <Route path="/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
+        <Route path="/admin/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
         <Route path="/admin/admin-table" element={<AdminRoute element={<AdminTable   showAlert={showAlert} />} />} />
         <Route path="/admin/slot/:slotNumber" element={<AdminRoute element={<SlotTable showAlert={showAlert} />} />} />
         <Route path="/admin/create-bill" element={<AdminRoute element={<UsersList showAlert={showAlert} />} />} />
-        <Route path="/user/:userId/create-bill" element={<AdminRoute element={<UserFoodPage showAlert={showAlert} />} />} />
+        <Route path="/admin/user/:userId/create-bill" element={<AdminRoute element={<UserFoodPage showAlert={showAlert} />} />} />
         <Route path="/admin/invoice" element={<AdminRoute element={<Invoices showAlert={showAlert} />} />} />
-        <Route path="/user/dash-board/:userId" element={<AdminRoute element={<UserDashBoard showAlert={showAlert} />} />} />
+        <Route path="/admin/user/dash-board/:userId" element={<AdminRoute element={<UserDashBoard showAlert={showAlert} />} />} />
         <Route path="/admin/all-invoices" element={<AdminRoute element={<InvoiceList showAlert={showAlert} />} />} />
         <Route path="/admin/invoices/:invoiceId" element={<AdminRoute element={<InvoiceDetail showAlert={showAlert} />} />} />
         <Route path="/admin/invoices/edit/:invoiceId" element={<AdminRoute element={<EditInvoice showAlert={showAlert} />} />} />
-        
+        <Route path="/admin/users/invoice/:userId" element={<PrivateRoute element={<UserInvoice />} />} />
+
         
         <Route path="*" element={<Navigate to="/" />} />
 
