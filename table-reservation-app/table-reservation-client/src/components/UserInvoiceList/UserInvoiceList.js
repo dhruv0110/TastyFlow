@@ -193,7 +193,7 @@ const InvoiceDetail = () => {
               </table>
             </div>
 
-            <div class="total-summary">
+            <div class="total-summary"> 
               <div class="total">
                 <div>CGST (2.5%):</div>
                 <div>${invoice.cgst.toFixed(2)}</div>
