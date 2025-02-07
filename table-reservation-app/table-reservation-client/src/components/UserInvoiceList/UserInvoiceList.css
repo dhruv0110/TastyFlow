@@ -60,3 +60,9 @@
     gap: 15px;
     margin-bottom: 1rem;
   }
+
+  .invoice-detail .form-section p {
+    font-weight: bold;
+    font-size: 16px;
+    color: #ff9f00; /* Yellow accent color */
+  }

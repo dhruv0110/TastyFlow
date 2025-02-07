@@ -174,11 +174,11 @@ const Invoice = ({ invoiceId, user }) => {
               <table>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th>SI Number</th>
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
-                    <th>Total</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -287,11 +287,11 @@ const Invoice = ({ invoiceId, user }) => {
   <table>
     <thead>
       <tr>
-        <th>#</th>
+        <th>SI Number</th>
         <th>Description</th>
         <th>Quantity</th>
         <th>Unit Price</th>
-        <th>Total</th>
+        <th>Amount</th>
       </tr>
     </thead>
     <tbody>

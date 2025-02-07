@@ -249,11 +249,11 @@ const EditInvoice = () => {
           <h4>Food Items:</h4>
           <div className="invoice-table">
             <div className="invoice-table-format title">
-              <b>#</b>
+              <b>SI Number</b>
               <b>Name</b>
               <b>Price</b>
               <b>Quantity</b>
-              <b>Total</b>
+              <b>Amount</b>
               <b>Action</b>
             </div>
             {invoice.foods.length > 0 ? (

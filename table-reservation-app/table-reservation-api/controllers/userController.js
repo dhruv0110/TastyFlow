@@ -478,11 +478,11 @@ const addFoodToUser = async (req, res) => {
         <table>
           <thead>
             <tr>
-              <th style="text-align: center;">SI no</th>
+              <th style="text-align: center;">SI Number</th>
               <th style="text-align: center;">Description</th>
               <th style="text-align: center;">Quantity</th>
               <th style="text-align: center;">Unit Price</th>
-              <th style="text-align: center;">Total</th>
+              <th style="text-align: center;">Amount</th>
             </tr>
           </thead>
           <tbody>

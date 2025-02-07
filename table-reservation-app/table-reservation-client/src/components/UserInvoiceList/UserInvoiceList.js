@@ -109,11 +109,22 @@ const InvoiceDetail = () => {
             .food-details th {
               background-color: #f4f4f4;
             }
+                  .final-total {
+        position: fixed;
+        bottom: 20px;
+        background-color: #fff;
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 5rem;
+      }
             .total-summary {
               margin-top: 20px;
               display: flex;
               flex-direction: column;
-              font-size: 1.2rem;
+              font-size: 14px;
             }
             .total {
               display: flex;
@@ -161,11 +172,11 @@ const InvoiceDetail = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th>SI Number</th>
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
-                    <th>Total</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -184,11 +195,11 @@ const InvoiceDetail = () => {
 
             <div class="total-summary">
               <div class="total">
-                <div>CGST (2.5%)</div>
+                <div>CGST (2.5%):</div>
                 <div>${invoice.cgst.toFixed(2)}</div>
               </div>
               <div class="total">
-                <div>SGST (2.5%)</div>
+                <div>SGST (2.5%):</div>
                 <div>${invoice.sgst.toFixed(2)}</div>
               </div>
               <div class="total">
@@ -197,19 +208,11 @@ const InvoiceDetail = () => {
               </div>
             </div>
 
-            <hr/>
-
             <div class="final-total">
-              <div>Total</div>
+              <div>Total:</div>
               <div>${invoice.totalAmount.toFixed(2)}</div>
-            </div>
+              </div>
 
-            <hr/>
-
-            <div class="invoice-footer">
-              <p>Thank you for your business!</p>
-              <p>TastyFlow - All Rights Reserved</p>
-            </div>
           </div>
         </body>
       </html>
@@ -261,13 +264,13 @@ const InvoiceDetail = () => {
               </div>
             </div>
 
-            <h4>Foods:</h4>
+            <h4>Foods Items:</h4>
             <div className="user-invoice-form flex-col">
               <div className="invoice-table-format title">
-                <b>#</b>
+                <b>SI Number</b>
                 <b>Name</b>
                 <b>Quantity</b>
-                <b>Price</b>
+                <b>Amount</b>
                 <b>Total</b>
               </div>
               {invoice.foods.length > 0 ? (

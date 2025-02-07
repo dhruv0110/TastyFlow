@@ -45,7 +45,7 @@ const List = () => {
             <div className="user-invoice-form flex-col">
               <div className="invoice-table">
                 <div className="invoice-table-format title">
-                  <b>Invoice Number</b>
+                  <b>SI Number</b>
                   <b>Date</b>
                   <b>View</b>
                   <b>Edit</b>
