@@ -10,7 +10,7 @@ const FoodItem = ({ name, description, price, image, date,category }) => {
   };
 
   return (
-    <div className="main-food-div">
+    <div className="main-food-div"> 
       <div className="food-item">
           <img
             className="food-item-image"
