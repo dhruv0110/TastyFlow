@@ -144,10 +144,22 @@ const Navbar = (props) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" onClick={closeNavbar}>Menu</Link>
+                <Link
+                  className={`nav-link ${location.pathname === "/Menu_Page" ? "active" : ""}`}
+                  to="./Menu_Page"
+                  onClick={closeNavbar} // Close the navbar on click
+                >
+                  Menu
+                </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" onClick={closeNavbar}>Recipe</Link>
+              <Link
+                  className={`nav-link ${location.pathname === "/Recipes" ? "active" : ""}`}
+                  to="./Recipes"
+                  onClick={closeNavbar} // Close the navbar on click
+                >
+                  Recipes
+                </Link>
               </li>
             </ul>
             <div className="right-box d-flex align-items-center mt-2">

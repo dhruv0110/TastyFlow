@@ -121,8 +121,8 @@ const About = () => {
                     </div>
                     <div className="col-lg-8 col-md-6 col-12 AboutStorySectionTwoRight">
                         <div className="AboutStorySectionTwoTop px-5 py-4 rounded-5 mt-4 mt-lg-0">
-                            <h2>Our Triumph</h2>
-                            <p>Achievement, and every milestone resonates with the spirit of our journey. Embark with us on this narrative of perseverance and accomplishment, where each chapter unfolds the stories behind our victories and the essence of our unwavering determination.</p>
+                            <h2  className='text-white'>Our Triumph</h2>
+                            <p className='text-white'>Achievement, and every milestone resonates with the spirit of our journey. Embark with us on this narrative of perseverance and accomplishment, where each chapter unfolds the stories behind our victories and the essence of our unwavering determination.</p>
                             <button className='hero-button'>Get Menu</button>
                         </div>
 
@@ -232,11 +232,6 @@ const About = () => {
             {/* Section-7 Testimonial */}
             <div className="AboutRepeats mt-0">
                 <Testimonial />
-            </div>
-
-            {/* Blog */}
-            <div className="container">
-            <Blog/>
             </div>
 
             {/* Footer */}
