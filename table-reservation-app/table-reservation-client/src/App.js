@@ -28,6 +28,10 @@ import InvoiceList from './components/InvoiceList/InvoiceList';
 import InvoiceDetail from './components/UserInvoiceList/UserInvoiceList';
 import EditInvoice from './components/EditInvoice/EditInvoice';
 import UserInvoice from "./components/UserInvoice/UserInvoice"
+import Menu_Page from './components/Menu Page/Menu_Page';
+import Recipes from './components/Recipes/Recipes';
+import Services from './components/Services/Services';
+import BlogDeatils from './components/BlogDetails/BlogDeatils';
 
 
 
@@ -119,12 +123,14 @@ function App() {
         <Route path="/admin/invoices/edit/:invoiceId" element={<AdminRoute element={<EditInvoice showAlert={showAlert} />} />} />
         <Route path="/admin/users/invoice/:userId" element={<PrivateRoute element={<UserInvoice />} />} />
 
-        
         <Route path="*" element={<Navigate to="/" />} />
-
         {/* About Path */}
         <Route path="/About" element={<About />} />
-      </Routes>
+        <Route path="/Menu_Page" element={<Menu_Page />} />
+        <Route path="/Recipes" element={<Recipes />} />
+        <Route path='/Services' element={<Services/>}/>
+        <Route path='/BlogDetails' element={<BlogDeatils/>}/>
+      </Routes>     
     </Router>
   );
 }

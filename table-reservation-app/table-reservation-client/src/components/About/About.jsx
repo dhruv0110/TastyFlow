@@ -2,6 +2,7 @@ import React from 'react'
 import './About.css';
 import { useState } from 'react';
 import Testimonial from '../Testimonial/Testimonial';
+import { Link } from 'react-router-dom';
 
 // Images
 import AboutSectionOneImage from './Images/AboutSectionOneImage.png';
@@ -93,7 +94,10 @@ const About = () => {
                                 Sustenance and delight—a journey through culinary landscapes where
                                 each dish narrates a unique tale.
                             </p>
+
+                            <Link to='/Menu_Page'>
                             <button className="hero-button btn btn-outline-light">Get Menu</button>
+                            </Link>
                         </div>
 
                         {/* Right Image */}
@@ -123,7 +127,9 @@ const About = () => {
                         <div className="AboutStorySectionTwoTop px-5 py-4 rounded-5 mt-4 mt-lg-0">
                             <h2>Our Triumph</h2>
                             <p>Achievement, and every milestone resonates with the spirit of our journey. Embark with us on this narrative of perseverance and accomplishment, where each chapter unfolds the stories behind our victories and the essence of our unwavering determination.</p>
+                            <Link to='/Menu_Page'>
                             <button className='hero-button'>Get Menu</button>
+                            </Link>
                         </div>
 
                         <div className="row AboutStorySectionTwoBottom mt-4">
