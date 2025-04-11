@@ -31,16 +31,11 @@ import InvoiceDetail from './components/UserInvoiceList/UserInvoiceList';
 import EditInvoice from './components/EditInvoice/EditInvoice';
 import UserInvoice from "./components/UserInvoice/UserInvoice"
 import Menu_Page from './components/Menu Page/Menu_Page';
-<<<<<<< HEAD
-import Recipes from './components/Recipes/Recipes';
-import Services from './components/Services/Services';
-import BlogDeatils from './components/BlogDetails/BlogDeatils';
 
-=======
 import Services from './components/Services/Services';
 import BlogDeatils from './components/BlogDetails/BlogDetails';
 import Recipes from "./components/Recipes/Recipes"
->>>>>>> ed43cffd6382e7cdf447aa4ac2415e0b5d2ada21
+
 
 
 function PrivateRoute({ element, ...rest }) {
@@ -139,20 +134,12 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
         {/* About Path */}
         <Route path="/About" element={<About />} />
-<<<<<<< HEAD
         <Route path="/Menu_Page" element={<Menu_Page />} />
         <Route path="/Recipes" element={<Recipes />} />
         <Route path='/Services' element={<Services/>}/>
         <Route path='/BlogDetails' element={<BlogDeatils/>}/>
       </Routes>     
-=======
-
-        {/* Menu Page */}
-        <Route path="/Menu_Page" element={<Menu_Page />} />
-
-      </Routes>
->>>>>>> ed43cffd6382e7cdf447aa4ac2415e0b5d2ada21
-    </Router>
+ </Router>
   );
 }
 
