@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import Sidebar from '../../components/Sidebar/Sidebar';
 import "./InvoiceList.css";
 import axios from 'axios';
@@ -7,6 +7,7 @@ import axios from 'axios';
 const List = () => {
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // Hook to navigate to other pages
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -23,42 +24,57 @@ const List = () => {
     fetchInvoices();
   }, []);
 
+  const navigateToInvoiceDetail = (invoiceId) => {
+    navigate(`/admin/invoices/${invoiceId}`);
+  };
+
+  const navigateToEditInvoice = (invoiceId) => {
+    navigate(`/admin/invoices/edit/${invoiceId}`);
+  };
+
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div className="invoice-list">
         <form className="invoice-list-form flex-col">
-          <h1 className="header">All Invoice List</h1>
+          <h1 className="header">User Invoices</h1>
 
           {loading ? (
             <p>Loading invoices...</p>
           ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Invoice Number</th>
-                  <th>Invoice Date</th>
-                  <th>Actions</th> {/* Add Actions column for Edit */}
-                </tr>
-              </thead>
-              <tbody>
-                {invoices.map((invoice) => (
-                  <tr key={invoice._id}>
-                    <td>{invoice.invoiceNumber}</td>
-                    <td>{new Date(invoice.invoiceDate).toLocaleDateString()}</td>
-                    <td>
-                      <Link to={`/admin/invoices/${invoice._id}`} style={{ color: 'blue', textDecoration: 'underline' }}>
+            <div className="user-invoice-form flex-col">
+              <div className="invoice-table">
+                <div className="invoice-table-format title">
+                  <b>SI Number</b>
+                  <b>Date</b>
+                  <b>View</b>
+                  <b>Edit</b>
+                </div>
+
+                {invoices.length > 0 ? (
+                  invoices.map((invoice) => (
+                    <div key={invoice._id} className="invoice-table-format">
+                      <p>{invoice.invoiceNumber}</p>
+                      <p>{new Date(invoice.invoiceDate).toLocaleDateString()}</p>
+                      <div
+                        onClick={() => navigateToInvoiceDetail(invoice._id)}
+                        className="view-button"
+                      >
                         View Invoice
-                      </Link>
-                      {' | '}
-                      <Link to={`/admin/invoices/edit/${invoice._id}`} style={{ color: 'green', textDecoration: 'underline' }}>
+                      </div>
+                      <div
+                        onClick={() => navigateToEditInvoice(invoice._id)}
+                        className="edit-button"
+                      >
                         Edit Invoice
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No invoices available.</p>
+                )}
+              </div>
+            </div>
           )}
         </form>
       </div>

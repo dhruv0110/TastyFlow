@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./Invoice.css"; // Import your invoice CSS styles
 import axios from "axios"; // Axios to make HTTP requests
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 const Invoice = ({ invoiceId, user }) => {
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isSending, setIsSending] = useState(false); // Track sending status
+
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -159,10 +161,10 @@ const Invoice = ({ invoiceId, user }) => {
             <div class="user-details">
               <h5>Bill To:</h5>
               ${user ? ` 
-                <p><strong>Name:</strong> ${user.name}</p>
-                <p><strong>Email:</strong> ${user.email}</p>
-                <p><strong>Contact:</strong> ${user.contact}</p>
-                <p><strong>Id:</strong> ${user._id}</p>
+                <p><strong>Name:</strong> ${invoice.userId.name}</p>
+                <p><strong>Email:</strong> ${invoice.userId.email}</p>
+                <p><strong>Contact:</strong> ${invoice.userId.contact}</p>
+                <p><strong>Id:</strong> ${user}</p>
               ` : '<p>No user data available</p>'}
             </div>
 
@@ -172,11 +174,11 @@ const Invoice = ({ invoiceId, user }) => {
               <table>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th>SI Number</th>
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
-                    <th>Total</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -241,7 +243,7 @@ const Invoice = ({ invoiceId, user }) => {
       setIsSending(true); // Set sending status to true
       const response = await axios.post(
         `http://localhost:5000/api/users/send-invoice/${invoiceId}`,
-        { userId: user._id }
+        { userId: user }
       );
       setIsSending(false); // Reset sending status after success
     } catch (error) {
@@ -270,10 +272,10 @@ const Invoice = ({ invoiceId, user }) => {
         <h5>Bill To:</h5>
         {user ? (
           <div>
-            <p><strong>Name:</strong> {user.name}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Contact:</strong> {user.contact}</p>
-            <p><strong>Id:</strong> {user._id}</p>
+             <p><strong>Name:</strong> {invoice.userId.name}</p>
+                <p><strong>Email:</strong> {invoice.userId.email}</p>
+                <p><strong>Contact:</strong> {invoice.userId.contact}</p>
+                <p><strong>Id:</strong> {user}</p>
           </div>
         ) : (
           <p>No user data available</p>
@@ -285,11 +287,11 @@ const Invoice = ({ invoiceId, user }) => {
   <table>
     <thead>
       <tr>
-        <th>#</th>
+        <th>SI Number</th>
         <th>Description</th>
         <th>Quantity</th>
         <th>Unit Price</th>
-        <th>Total</th>
+        <th>Amount</th>
       </tr>
     </thead>
     <tbody>

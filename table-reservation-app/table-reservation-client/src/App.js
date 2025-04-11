@@ -1,3 +1,5 @@
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import UserPanel from './components/UserPanel/UserPanel';
@@ -27,7 +29,18 @@ import UserDashBoard from './components/UserDashboard/UserDashboard';
 import InvoiceList from './components/InvoiceList/InvoiceList';
 import InvoiceDetail from './components/UserInvoiceList/UserInvoiceList';
 import EditInvoice from './components/EditInvoice/EditInvoice';
+import UserInvoice from "./components/UserInvoice/UserInvoice"
+import Menu_Page from './components/Menu Page/Menu_Page';
+<<<<<<< HEAD
+import Recipes from './components/Recipes/Recipes';
+import Services from './components/Services/Services';
+import BlogDeatils from './components/BlogDetails/BlogDeatils';
 
+=======
+import Services from './components/Services/Services';
+import BlogDeatils from './components/BlogDetails/BlogDetails';
+import Recipes from "./components/Recipes/Recipes"
+>>>>>>> ed43cffd6382e7cdf447aa4ac2415e0b5d2ada21
 
 
 function PrivateRoute({ element, ...rest }) {
@@ -102,29 +115,43 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword showAlert={showAlert} />} />
         <Route path="/table-reserve" element={localStorage.getItem("token") ? <TableComponent showAlert={showAlert} /> : <Navigate to="/login" />} />
         <Route path="/admin" element={<AdminRoute element={<Admin showAlert={showAlert} />} />} />
-        {/* <Route path="/admin/slot1" element={<AdminRoute element={<Slot1Table showAlert={showAlert} />} />} /> */}
-        {/* <Route path="/admin/slot2" element={<AdminRoute element={<Slot2Table showAlert={showAlert} />} />} /> */}
-        <Route path="/list" element={<AdminRoute element={<List showAlert={showAlert} />} />} />
+        <Route path="/admin/list" element={<AdminRoute element={<List showAlert={showAlert} />} />} />
         <Route path="/admin/add" element={<AdminRoute element={<Add showAlert={showAlert} />} />} />
         <Route path="/admin/all-users" element={<AdminRoute element={<UserData showAlert={showAlert} />} />} />
         <Route path="/admin/all-reviews" element={<AdminRoute element={<Reviews showAlert={showAlert} />} />} />
-        <Route path="/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
-        <Route path="/admin/admin-table" element={<AdminRoute element={<AdminTable   showAlert={showAlert} />} />} />
+        <Route path="/admin/users/reviews/:userId" element={<PrivateRoute element={<UserReviews />} />} /> {/* Add this route for UserReviews */}
+        <Route path="/admin/admin-table" element={<AdminRoute element={<AdminTable showAlert={showAlert} />} />} />
         <Route path="/admin/slot/:slotNumber" element={<AdminRoute element={<SlotTable showAlert={showAlert} />} />} />
         <Route path="/admin/create-bill" element={<AdminRoute element={<UsersList showAlert={showAlert} />} />} />
-        <Route path="/user/:userId/create-bill" element={<AdminRoute element={<UserFoodPage showAlert={showAlert} />} />} />
+        <Route path="/admin/user/:userId/create-bill" element={<AdminRoute element={<UserFoodPage showAlert={showAlert} />} />} />
         <Route path="/admin/invoice" element={<AdminRoute element={<Invoices showAlert={showAlert} />} />} />
-        <Route path="/user/dash-board/:userId" element={<AdminRoute element={<UserDashBoard showAlert={showAlert} />} />} />
+        <Route path="/admin/user/dash-board/:userId" element={<AdminRoute element={<UserDashBoard showAlert={showAlert} />} />} />
         <Route path="/admin/all-invoices" element={<AdminRoute element={<InvoiceList showAlert={showAlert} />} />} />
         <Route path="/admin/invoices/:invoiceId" element={<AdminRoute element={<InvoiceDetail showAlert={showAlert} />} />} />
         <Route path="/admin/invoices/edit/:invoiceId" element={<AdminRoute element={<EditInvoice showAlert={showAlert} />} />} />
-        
-        
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/admin/users/invoice/:userId" element={<PrivateRoute element={<UserInvoice />} />} />
+        <Route path="/Services" element={<Services />} />
+        <Route path="/BlogDetails" element={<BlogDeatils />} />
+        <Route path="/Recipes" element={<Recipes />} />
 
+
+
+        <Route path="*" element={<Navigate to="/" />} />
         {/* About Path */}
         <Route path="/About" element={<About />} />
+<<<<<<< HEAD
+        <Route path="/Menu_Page" element={<Menu_Page />} />
+        <Route path="/Recipes" element={<Recipes />} />
+        <Route path='/Services' element={<Services/>}/>
+        <Route path='/BlogDetails' element={<BlogDeatils/>}/>
+      </Routes>     
+=======
+
+        {/* Menu Page */}
+        <Route path="/Menu_Page" element={<Menu_Page />} />
+
       </Routes>
+>>>>>>> ed43cffd6382e7cdf447aa4ac2415e0b5d2ada21
     </Router>
   );
 }

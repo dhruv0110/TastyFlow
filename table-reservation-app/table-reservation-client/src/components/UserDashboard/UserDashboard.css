@@ -19,10 +19,9 @@
     border-bottom: 2px solid #ff4135;
     padding-bottom: 1rem;
   }
-
+  
   .review-btn {
-    width: 100%;
-    max-width: 150px;
+    flex: 1; /* Makes the button take up 50% of the width */
     padding: 12px;
     border: none;
     background-color: #ff4135;
@@ -31,5 +30,20 @@
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    align-self: flex-end;
+    align-self: center; /* Centers the buttons vertically */
+    width: 48%; /* Ensure each button takes 50% of width with some margin */
+  }
+
+
+.all-button {
+  display: flex; /* Flexbox to align buttons horizontally */
+  
+  gap: 10px; /* Adds space between the buttons */
+  width: 100%;
+}
+
+
+
+.review-btn:first-child {
+  margin-right: 10px; /* Adds some space between the buttons */
 }

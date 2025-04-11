@@ -1,0 +1,31 @@
+
+
+@media screen and (min-device-width: 250px) and (max-device-width: 992px) { 
+    .special-menu-wrap {
+        align-items: center;
+      }
+  }
+  @media screen and (min-device-width: 250px) and (max-device-width: 992px) { 
+    .classic-menu-wrap {
+        align-items: center;
+      }
+  }
+  @media screen and (min-device-width: 250px) and (max-device-width: 992px) { 
+    .menu-subtitle-wrap {
+       text-align: center;
+      }
+  }
+  @media screen and (min-device-width: 250px) and (max-device-width: 475px) { 
+    .menu-subtitle-wrap {
+      margin-bottom: 30px;
+      }
+  }
+  @media screen and (max-width: 479px) {
+    .menu-item-area {
+        grid-row-gap: 20px;
+    }
+  }
+  
+  .footer{
+    padding-bottom: 0px !important;
+  }

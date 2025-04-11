@@ -239,7 +239,7 @@ const UserFoodPage = () => {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
            
             {invoiceGenerated && user && invoiceId && (
-              <Invoice invoiceId={invoiceId} user={user} />
+              <Invoice invoiceId={invoiceId} user={userId} />
             )}
           </div>
         </div>

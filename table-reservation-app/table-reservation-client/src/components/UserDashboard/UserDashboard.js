@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 const UserDashBoard = () => {
     const { userId } = useParams();
     const navigate = useNavigate(); // hook for navigation
-console.log('User ID:', userId);  // This will help you verify the userId
 
     const [userName, setUserName] = useState('')
     const fetchUserDetails = async () => {
@@ -21,7 +20,6 @@ console.log('User ID:', userId);  // This will help you verify the userId
           });
     
           const data = await response.json();
-          console.log(data)
           if (response.ok) {
             setUserName(data);
           } else {
@@ -29,7 +27,6 @@ console.log('User ID:', userId);  // This will help you verify the userId
           }
         } catch (error) {
           toast.error("An error occurred while fetching user details");
-          console.log(error)
         }
       };
 
@@ -38,15 +35,21 @@ console.log('User ID:', userId);  // This will help you verify the userId
         }, [userId]);
 
         const handleReviewsClick = () => {
-            navigate(`/users/reviews/${userId}`); // Navigate to the reviews page
+            navigate(`/admin/users/reviews/${userId}`); // Navigate to the reviews page
         };
+        const handleInvoiceClick = () => {
+          navigate(`/admin/users/invoice/${userId}`); // Navigate to the invoice page
+      };
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div className="user-dash">
         <form className="user-dash-form flex-col">
           <h1 className="header">{userName.name}</h1>
+          <div className='all-button'>
             <button className='review-btn' onClick={handleReviewsClick}>Reviews </button>
+            <button className='review-btn' onClick={handleInvoiceClick}>Invoice </button>
+            </div>
         </form>
       </div>
     </div>
