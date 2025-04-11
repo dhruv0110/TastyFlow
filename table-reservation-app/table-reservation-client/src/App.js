@@ -31,7 +31,6 @@ import UserDashBoard from './components/UserDashboard/UserDashboard';
 import InvoiceList from './components/InvoiceList/InvoiceList';
 import InvoiceDetail from './components/UserInvoiceList/UserInvoiceList';
 import EditInvoice from './components/EditInvoice/EditInvoice';
-<<<<<<< HEAD
 import UserInvoice from "./components/UserInvoice/UserInvoice"
 import Menu_Page from './components/Menu Page/Menu_Page';
 
@@ -39,9 +38,6 @@ import Services from './components/Services/Services';
 import BlogDeatils from './components/BlogDetails/BlogDetails';
 import Recipes from "./components/Recipes/Recipes"
 
-=======
-
->>>>>>> 3d1fcad4b36bdd4f31058e5e8281aa823f50920a
 
 
 function PrivateRoute({ element, ...rest }) {
@@ -140,17 +136,12 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
         {/* About Path */}
         <Route path="/About" element={<About />} />
-<<<<<<< HEAD
         <Route path="/Menu_Page" element={<Menu_Page />} />
         <Route path="/Recipes" element={<Recipes />} />
         <Route path='/Services' element={<Services/>}/>
         <Route path='/BlogDetails' element={<BlogDeatils/>}/>
       </Routes>     
  </Router>
-=======
-      </Routes>
-    </Router>
->>>>>>> 3d1fcad4b36bdd4f31058e5e8281aa823f50920a
   );
 }
 
