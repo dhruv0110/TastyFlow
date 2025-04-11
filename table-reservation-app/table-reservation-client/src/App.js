@@ -1,5 +1,7 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import UserPanel from './components/UserPanel/UserPanel';
@@ -29,11 +31,6 @@ import UserDashBoard from './components/UserDashboard/UserDashboard';
 import InvoiceList from './components/InvoiceList/InvoiceList';
 import InvoiceDetail from './components/UserInvoiceList/UserInvoiceList';
 import EditInvoice from './components/EditInvoice/EditInvoice';
-import UserInvoice from "./components/UserInvoice/UserInvoice"
-import Menu_Page from './components/Menu Page/Menu_Page';
-import Recipes from './components/Recipes/Recipes';
-import Services from './components/Services/Services';
-import BlogDeatils from './components/BlogDetails/BlogDeatils';
 
 
 
@@ -133,11 +130,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
         {/* About Path */}
         <Route path="/About" element={<About />} />
-        <Route path="/Menu_Page" element={<Menu_Page />} />
-        <Route path="/Recipes" element={<Recipes />} />
-        <Route path='/Services' element={<Services/>}/>
-        <Route path='/BlogDetails' element={<BlogDeatils/>}/>
-      </Routes>     
+      </Routes>
     </Router>
   );
 }
