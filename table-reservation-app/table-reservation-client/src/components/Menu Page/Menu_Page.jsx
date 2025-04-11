@@ -1,4 +1,3 @@
-
 import React from 'react'
 import '../About/About.css';
 import './Menu_Page.css';
@@ -286,7 +285,6 @@ const Menu_Page = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>

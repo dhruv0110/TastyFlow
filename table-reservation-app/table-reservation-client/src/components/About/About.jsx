@@ -240,11 +240,6 @@ const About = () => {
                 <Testimonial />
             </div>
 
-            {/* Blog */}
-            <div className="container">
-            <Blog/>
-            </div>
-
             {/* Footer */}
             <Footer/>
         </>

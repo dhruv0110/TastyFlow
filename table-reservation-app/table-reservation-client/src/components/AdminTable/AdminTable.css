@@ -21,6 +21,7 @@
 }
 
 .slot-btn {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between; /* Align buttons in the center for smaller screens */
@@ -30,9 +31,8 @@
 }
 
 .slot-btn .btn {
+  width: 100%;
   flex: 1;
-  min-width: 350px; /* Reduced width for smaller screens */
-  max-width: 350px; /* Ensures consistent sizing on larger screens */
   padding: 1rem;
   background-color: #333;
   border: none;
